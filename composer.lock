@@ -1,0 +1,61 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "5216c1bf91d6bb10b2bcad2e22d3e108",
+    "packages": [
+        {
+            "name": "cyril-verloop/iterator",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cyrilverloop/iterator.git",
+                "reference": "9570c216a0b0653a83cdc70425bf5e4be45a1624"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cyrilverloop/iterator/zipball/9570c216a0b0653a83cdc70425bf5e4be45a1624",
+                "reference": "9570c216a0b0653a83cdc70425bf5e4be45a1624",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CyrilVerloop\\Iterator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cyril VERLOOP",
+                    "email": "cyril.verloop@webqard.fr"
+                }
+            ],
+            "description": "An iterator utility.",
+            "support": {
+                "issues": "https://github.com/cyrilverloop/iterator/issues",
+                "source": "https://github.com/cyrilverloop/iterator/tree/1.1.0"
+            },
+            "time": "2021-01-23T22:55:54+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.4"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}

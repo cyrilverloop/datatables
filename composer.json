@@ -1,0 +1,26 @@
+{
+    "name": "cyril-verloop/datatables",
+    "description": "A library to use DataTables with PHP 7.4+.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "CyrilVerloop\\Datatables\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CyrilVerloop\\Datatables\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=7.4",
+        "cyril-verloop/iterator": "^1.1.0"
+    },
+    "authors": [
+        {
+            "name": "Cyril VERLOOP",
+            "email": "cyril.verloop@webqard.fr"
+        }
+    ]
+}

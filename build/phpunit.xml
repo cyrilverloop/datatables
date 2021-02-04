@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+        bootstrap="../vendor/autoload.php"
+        cacheResultFile="./cache/.phpunit.result.cache"
+        forceCoversAnnotation="true"
+        beStrictAboutCoversAnnotation="true"
+        beStrictAboutOutputDuringTests="true"
+        beStrictAboutTodoAnnotatedTests="true"
+        verbose="true"
+        colors="true"
+>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">../src</directory>
+        </include>
+
+        <report>
+            <clover outputFile="phpunit/clover.xml" />
+            <crap4j outputFile="phpunit/crap4j.xml" />
+            <html outputDirectory="phpunit/html" lowUpperBound="35" highLowerBound="70" />
+            <xml outputDirectory="phpunit/xml" />
+        </report>
+    </coverage>
+
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <directory>../tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <logging>
+        <junit outputFile="phpunit/junit.xml" />
+        <testdoxHtml outputFile="phpunit/testdox.html" />
+    </logging>
+</phpunit>
