@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace CyrilVerloop\Datatables;
 
 use CyrilVerloop\Datatables\Column;
-use CyrilVerloop\Datatables\Search;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test a column for Datatables.
+ * Tests a column for Datatables.
  * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Column
@@ -39,10 +38,9 @@ class ColumnTest extends TestCase
 
 
     /**
-     * Test that data can be accessed.
+     * Tests that data can be accessed.
      * @return void
      *
-     * @test
      * @covers ::getData
      */
     public function testCanGetData(): void
@@ -52,10 +50,9 @@ class ColumnTest extends TestCase
 
 
     /**
-     * Test if the column can be searched.
+     * Tests if the column can be searched.
      * @return void
      *
-     * @test
      * @covers ::isSearchable
      */
     public function testCanGetSearchable(): void
@@ -65,10 +62,9 @@ class ColumnTest extends TestCase
 
 
     /**
-     * Test if the column can be ordered.
+     * Tests if the column can be ordered.
      * @return void
      *
-     * @test
      * @covers ::isOrderable
      */
     public function testCanGetOrderable(): void

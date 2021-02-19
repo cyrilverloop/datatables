@@ -9,7 +9,7 @@ use CyrilVerloop\Datatables\Request;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test the request for Datatables.
+ * Tests the request for Datatables.
  * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Request
@@ -115,7 +115,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Test that an \RangeException is thrown when constructed.
+     * Tests that an \RangeException is thrown when constructed.
      * @param mixed[] $columns the columns.
      * @param mixed[] $order the order (column/direction).
      * @param int $start the starting point.
@@ -123,8 +123,6 @@ class RequestTest extends TestCase
      * @param mixed[] $search the elements for the search.
      * @return void
      *
-     * @test
-     * @covers ::__construct
      * @uses \CyrilVerloop\Datatables\Column
      * @uses \CyrilVerloop\Datatables\Columns
      * @uses \CyrilVerloop\Datatables\Order
@@ -147,10 +145,9 @@ class RequestTest extends TestCase
 
 
     /**
-     * Test that no criteria is returned.
+     * Tests that no criteria is returned.
      * @return void
      *
-     * @test
      * @covers ::getCriterias
      * @uses \CyrilVerloop\Datatables\Column
      * @uses \CyrilVerloop\Datatables\Columns
@@ -176,10 +173,9 @@ class RequestTest extends TestCase
     }
 
     /**
-     * Test that criterias are returned.
+     * Tests that criterias are returned.
      * @return void
      *
-     * @test
      * @covers ::getCriterias
      * @uses \CyrilVerloop\Datatables\Column
      * @uses \CyrilVerloop\Datatables\Columns
@@ -198,11 +194,10 @@ class RequestTest extends TestCase
 
 
     /**
-     * Test that an empty array is returned
+     * Tests that an empty array is returned
      * if there is no order.
      * @return void
      *
-     * @test
      * @covers ::getOrderBy
      * @uses \CyrilVerloop\Datatables\Column
      * @uses \CyrilVerloop\Datatables\Columns
@@ -225,11 +220,10 @@ class RequestTest extends TestCase
 
 
     /**
-     * Test that an exception is thrown
+     * Tests that an exception is thrown
      * when it is impossible to order on a column.
      * @return void
      *
-     * @test
      * @covers ::getOrderBy
      * @uses \CyrilVerloop\Datatables\Column
      * @uses \CyrilVerloop\Datatables\Columns
@@ -263,10 +257,9 @@ class RequestTest extends TestCase
 
 
     /**
-     * Test that the order is returned.
+     * Tests that the order is returned.
      * @return void
      *
-     * @test
      * @covers ::getOrderBy
      * @uses \CyrilVerloop\Datatables\Column
      * @uses \CyrilVerloop\Datatables\Columns

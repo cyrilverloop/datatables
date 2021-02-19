@@ -62,7 +62,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * Test that a \RangeException is thrown when the object is constructed.
+     * Tests that a \RangeException is thrown when the object is constructed.
      * @param int $draw the number of time the array is drawn.
      * @param mixed[] $data the datas.
      * @param int $recordsTotal the number of records.
@@ -99,7 +99,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * Test that a \LogicException is thrown when the object is constructed.
+     * Tests that a \LogicException is thrown when the object is constructed.
      * @param int $draw the number of time the array is drawn.
      * @param mixed[] $data the datas.
      * @param int $recordsTotal the number of records.
@@ -122,7 +122,7 @@ class ResponseTest extends TestCase
 
 
     /**
-     * Test that the object can be serialized.
+     * Tests that the object can be serialized.
      * @return void
      *
      * @covers ::jsonSerialize

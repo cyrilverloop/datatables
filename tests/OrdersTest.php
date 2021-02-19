@@ -9,10 +9,11 @@ use CyrilVerloop\Datatables\Orders;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test the list of orders for Datatables.
+ * Tests the list of orders for Datatables.
  * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Orders
+ * @covers ::__construct
  */
 class OrdersTest extends TestCase
 {
@@ -50,13 +51,11 @@ class OrdersTest extends TestCase
     }
 
     /**
-     * Test that an exception is thrown
+     * Tests that an exception is thrown
      * if datas are missing.
      * @param mixed[] $missingOrderDatas missing search datas.
      * @return void
      *
-     * @test
-     * @covers ::__construct
      * @covers ::addFromArray
      * @dataProvider getMissingOrderDatas
      */
@@ -69,11 +68,8 @@ class OrdersTest extends TestCase
     }
 
     /**
-     * Test that an object can be constructed without data.
+     * Tests that an object can be constructed without data.
      * @return void
-     *
-     * @test
-     * @covers ::__construct
      */
     public function testCanBeConstructedWithEmptyDatas(): void
     {
@@ -93,12 +89,10 @@ class OrdersTest extends TestCase
     }
 
     /**
-     * Test that an object can be constructed with datas.
+     * Tests that an object can be constructed with datas.
      * @param mixed[] $orderDatas order datas.
      * @return void
      *
-     * @test
-     * @covers ::__construct
      * @covers ::addFromArray
      * @uses \CyrilVerloop\Datatables\Order
      * @uses \CyrilVerloop\Datatables\Orders
@@ -113,10 +107,9 @@ class OrdersTest extends TestCase
 
 
     /**
-     * Test that an order can be added.
+     * Tests that an order can be added.
      * @return void
      *
-     * @test
      * @covers ::add
      * @uses \CyrilVerloop\Datatables\Order
      * @uses \CyrilVerloop\Datatables\Orders
@@ -135,10 +128,9 @@ class OrdersTest extends TestCase
 
 
     /**
-     * Test that the iterator can be rewinded.
+     * Tests that the iterator can be rewinded.
      * @return void
      *
-     * @test
      * @covers ::rewind
      * @uses \CyrilVerloop\Datatables\Order
      * @uses \CyrilVerloop\Datatables\Orders

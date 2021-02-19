@@ -8,7 +8,7 @@ use CyrilVerloop\Datatables\Search;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test the search elements for Datatables.
+ * Tests the search elements for Datatables.
  * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Search
@@ -55,7 +55,7 @@ class SearchTest extends TestCase
     }
 
     /**
-     * Test that an exception is thrown
+     * Tests that an exception is thrown
      * if datas are missing.
      * @param mixed[] $missingDatas missing datas.
      * @return void
@@ -83,12 +83,11 @@ class SearchTest extends TestCase
     }
 
     /**
-     * Test that an exception is thrown
+     * Tests that an exception is thrown
      * if datas are invalid.
      * @param mixed[] $invalidDatas des données invalides.
      * @return void
      *
-     * @test
      * @dataProvider getInvalidSearchDatas
      */
     public function testCanThrownAnInvalidArgumentExceptionWhenConstructingIf(array $invalidDatas): void
@@ -100,7 +99,7 @@ class SearchTest extends TestCase
     }
 
     /**
-     * Test that an exception is thrown
+     * Tests that an exception is thrown
      * if the regex is unexpected.
      * @return void
      */
@@ -114,7 +113,7 @@ class SearchTest extends TestCase
 
 
     /**
-     * Test that the value can be returned.
+     * Tests that the value can be returned.
      * @return void
      *
      * @covers ::getValue
@@ -126,7 +125,7 @@ class SearchTest extends TestCase
 
 
     /**
-     * Test that the regex can be returned false.
+     * Tests that the regex can be returned false.
      * @return void
      *
      * @covers ::getRegex
@@ -138,7 +137,7 @@ class SearchTest extends TestCase
 
 
     /**
-     * Test that the regex can be returned true.
+     * Tests that the regex can be returned true.
      * @return void
      *
      * @covers ::getRegex
