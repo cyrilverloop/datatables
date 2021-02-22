@@ -48,9 +48,9 @@ class Columns extends IntPosition
      * @throws \OutOfBoundsException if a key is missing.
      * @throws \InvalidArgumentException if the values are not of the proper types.
      * @throws \UnexpectedValueException if "searchable" or "orderable" are not "true" or "false".
-     * @return $this
+     * @return void
      */
-    private function addFromArray(array $columnDatas)
+    private function addFromArray(array $columnDatas): void
     {
         if (
             array_key_exists('data', $columnDatas) === false ||
@@ -90,19 +90,17 @@ class Columns extends IntPosition
             $orderable = true;
         }
 
-        return $this->add(new Column($columnDatas['data'], $searchable, $orderable));
+        $this->add(new Column($columnDatas['data'], $searchable, $orderable));
     }
 
     /**
      * Adds a column.
      * @param \CyrilVerloop\Datatables\Column $column the column.
-     * @return $this
+     * @return void
      */
-    public function add(Column $column)
+    public function add(Column $column): void
     {
         $this->list[] = $column;
-
-        return $this;
     }
 
     /**

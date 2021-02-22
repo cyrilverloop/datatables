@@ -47,9 +47,9 @@ class Orders extends IntPosition
      * @param mixed[] $orderDatas the datas.
      * @throws \OutOfBoundsException if a key is missing.
      * @throws \InvalidArgumentException if "column" is not an integer.
-     * @return $this
+     * @return void
      */
-    private function addFromArray(array $orderDatas)
+    private function addFromArray(array $orderDatas): void
     {
         if (
             array_key_exists('column', $orderDatas) === false ||
@@ -58,18 +58,16 @@ class Orders extends IntPosition
             throw new \OutOfBoundsException('orders.key.notExist');
         }
 
-        return $this->add(new Order((int)$orderDatas['column'], (string)$orderDatas['dir']));
+        $this->add(new Order((int)$orderDatas['column'], (string)$orderDatas['dir']));
     }
 
     /**
      * Adds an order.
      * @param \CyrilVerloop\Datatables\Order $order an order.
-     * @return $this
+     * @return void
      */
-    public function add(Order $order)
+    public function add(Order $order): void
     {
         $this->list[] = $order;
-
-        return $this;
     }
 }
