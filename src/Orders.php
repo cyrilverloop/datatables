@@ -58,7 +58,7 @@ class Orders extends IntPosition
             throw new \OutOfBoundsException('orders.key.notExist');
         }
 
-        $this->add(new Order((int)$orderDatas['column'], (string)$orderDatas['dir']));
+        $this->list[] = new Order((int)$orderDatas['column'], (string)$orderDatas['dir']);
     }
 
     /**

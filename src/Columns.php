@@ -90,7 +90,7 @@ class Columns extends IntPosition
             $orderable = true;
         }
 
-        $this->add(new Column($columnDatas['data'], $searchable, $orderable));
+        $this->list[] = new Column($columnDatas['data'], $searchable, $orderable);
     }
 
     /**
