@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.0.0] - 2021-02-22
 ### Changed
-- In `Columns` and `Orders` classes, the `add()` has now `void` as a return type instead of `$this`.
+- In `Columns` and `Orders` classes, the `add()` does not return `$this` anymore and has `void` as a return type.
 
 ## [1.0.0] - 2021-02-04
 ### Added
