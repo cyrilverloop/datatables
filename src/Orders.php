@@ -21,7 +21,6 @@ class Orders extends IntPosition
     public function __construct(array $ordersDatas)
     {
         parent::__construct();
-        $this->position = 0;
 
         /**
          * @var mixed[] $orderDatas
@@ -33,13 +32,6 @@ class Orders extends IntPosition
 
 
     // Methods :
-
-    // \Iterator :
-
-    public function rewind(): void
-    {
-        $this->position = 0;
-    }
 
 
     /**
