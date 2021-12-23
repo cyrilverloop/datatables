@@ -10,7 +10,6 @@ namespace CyrilVerloop\Datatables;
  */
 class Search
 {
-
     // Properties :
 
     /**
