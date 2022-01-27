@@ -14,8 +14,8 @@
         }
     },
     "require": {
-        "php": ">=7.4",
-        "cyril-verloop/iterator": "^2.0"
+        "php": ">=8.0",
+        "cyril-verloop/iterator": "^3.0"
     },
     "authors": [
         {

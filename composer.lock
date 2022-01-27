@@ -4,24 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "839e14084d4dcdfef46a515804365efc",
+    "content-hash": "776442d740fc1f3cfda60a50fe30c276",
     "packages": [
         {
             "name": "cyril-verloop/iterator",
-            "version": "2.0.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cyrilverloop/iterator.git",
-                "reference": "7620f9638597391831c28b5bc4ba185e414573c4"
+                "reference": "38be8be717dcf21abe6a62bdd7911fce74065e50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cyrilverloop/iterator/zipball/7620f9638597391831c28b5bc4ba185e414573c4",
-                "reference": "7620f9638597391831c28b5bc4ba185e414573c4",
+                "url": "https://api.github.com/repos/cyrilverloop/iterator/zipball/38be8be717dcf21abe6a62bdd7911fce74065e50",
+                "reference": "38be8be717dcf21abe6a62bdd7911fce74065e50",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4"
+                "php": ">=8.0"
             },
             "type": "library",
             "autoload": {
@@ -42,9 +42,9 @@
             "description": "An iterator utility.",
             "support": {
                 "issues": "https://github.com/cyrilverloop/iterator/issues",
-                "source": "https://github.com/cyrilverloop/iterator/tree/2.0.0"
+                "source": "https://github.com/cyrilverloop/iterator/tree/3.0.0"
             },
-            "time": "2021-09-23T09:11:57+00:00"
+            "time": "2022-01-27T08:24:08+00:00"
         }
     ],
     "packages-dev": [],
@@ -54,7 +54,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4"
+        "php": ">=8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.2.0"
