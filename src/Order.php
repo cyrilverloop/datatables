@@ -6,7 +6,6 @@ namespace CyrilVerloop\Datatables;
 
 /**
  * A class representing an order for DataTables.
- * @package \Bundles\CrudBundle\Columntables
  */
 class Order
 {

@@ -6,7 +6,6 @@ namespace CyrilVerloop\Datatables;
 
 /**
  * The request from DataTables.
- * @package \CyrilVerloop\Datatables
  */
 class Request
 {

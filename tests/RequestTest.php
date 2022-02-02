@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the request for Datatables.
- * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Request
  * @covers ::__construct
@@ -54,7 +53,6 @@ class RequestTest extends TestCase
 
     /**
      * Initialises tests.
-     * @return void
      */
     public function setUp(): void
     {
@@ -121,7 +119,6 @@ class RequestTest extends TestCase
      * @param int $start the starting point.
      * @param int $length the length.
      * @param mixed[] $search the elements for the search.
-     * @return void
      *
      * @uses \CyrilVerloop\Datatables\Column
      * @uses \CyrilVerloop\Datatables\Columns
@@ -146,7 +143,6 @@ class RequestTest extends TestCase
 
     /**
      * Tests that no criteria is returned.
-     * @return void
      *
      * @covers ::getCriterias
      * @uses \CyrilVerloop\Datatables\Column
@@ -174,7 +170,6 @@ class RequestTest extends TestCase
 
     /**
      * Tests that criterias are returned.
-     * @return void
      *
      * @covers ::getCriterias
      * @uses \CyrilVerloop\Datatables\Column
@@ -196,7 +191,6 @@ class RequestTest extends TestCase
     /**
      * Tests that an empty array is returned
      * if there is no order.
-     * @return void
      *
      * @covers ::getOrderBy
      * @uses \CyrilVerloop\Datatables\Column
@@ -222,7 +216,6 @@ class RequestTest extends TestCase
     /**
      * Tests that an exception is thrown
      * when it is impossible to order on a column.
-     * @return void
      *
      * @covers ::getOrderBy
      * @uses \CyrilVerloop\Datatables\Column
@@ -258,7 +251,6 @@ class RequestTest extends TestCase
 
     /**
      * Tests that the order is returned.
-     * @return void
      *
      * @covers ::getOrderBy
      * @uses \CyrilVerloop\Datatables\Column

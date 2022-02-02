@@ -8,7 +8,6 @@ use CyrilVerloop\Iterator\IntPosition;
 
 /**
  * A class to iterate over the orders.
- * @package \CyrilVerloop\Datatables
  */
 class Orders extends IntPosition
 {
@@ -39,7 +38,6 @@ class Orders extends IntPosition
      * @param mixed[] $orderDatas the datas.
      * @throws \OutOfBoundsException if a key is missing.
      * @throws \InvalidArgumentException if "column" is not an integer.
-     * @return void
      */
     private function addFromArray(array $orderDatas): void
     {
@@ -56,7 +54,6 @@ class Orders extends IntPosition
     /**
      * Adds an order.
      * @param \CyrilVerloop\Datatables\Order $order an order.
-     * @return void
      */
     public function add(Order $order): void
     {

@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the response for Datatables.
- * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Response
  * @covers ::__construct
@@ -33,7 +32,6 @@ class ResponseTest extends TestCase
 
     /**
      * Initialises tests.
-     * @return void
      */
     public function setUp(): void
     {
@@ -67,7 +65,6 @@ class ResponseTest extends TestCase
      * @param mixed[] $data the datas.
      * @param int $recordsTotal the number of records.
      * @param int $recordsFiltered the number of filtered records.
-     * @return void
      *
      * @dataProvider getParametersForConstructorRangeExceptions
      */
@@ -104,7 +101,6 @@ class ResponseTest extends TestCase
      * @param mixed[] $data the datas.
      * @param int $recordsTotal the number of records.
      * @param int $recordsFiltered the number of filtered records.
-     * @return void
      *
      * @dataProvider getParametersForConstructorLogicExceptions
      */
@@ -123,7 +119,6 @@ class ResponseTest extends TestCase
 
     /**
      * Tests that the object can be serialized.
-     * @return void
      *
      * @covers ::jsonSerialize
      */

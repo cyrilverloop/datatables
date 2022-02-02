@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests an order for Datatables.
- * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Order
  * @covers ::__construct
@@ -28,7 +27,6 @@ class OrderTest extends TestCase
 
     /**
      * Initialises tests.
-     * @return void
      */
     public function setUp(): void
     {
@@ -39,7 +37,6 @@ class OrderTest extends TestCase
     /**
      * Tests that an object can not be constructed
      * if the column number is negative.
-     * @return void
      */
     public function testCanNotBeConstructedWhenColumnIsNegative(): void
     {
@@ -52,7 +49,6 @@ class OrderTest extends TestCase
     /**
      * Tests that an object can not be constructed
      * if the direction is invalid.
-     * @return void
      */
     public function testCanNotBeConstructedWhenDirIsInvalid(): void
     {
@@ -78,7 +74,6 @@ class OrderTest extends TestCase
      * Tests that an object can be constructed.
      * @param int $column the column number.
      * @param string $dir the direction (asc/desc).
-     * @return void
      *
      * @covers ::getColumn
      * @covers ::getDir

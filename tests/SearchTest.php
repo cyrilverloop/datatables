@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the search elements for Datatables.
- * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Search
  * @covers ::__construct
@@ -28,7 +27,6 @@ class SearchTest extends TestCase
 
     /**
      * Initialises tests.
-     * @return void
      */
     public function setUp(): void
     {
@@ -58,7 +56,6 @@ class SearchTest extends TestCase
      * Tests that an exception is thrown
      * if datas are missing.
      * @param mixed[] $missingDatas missing datas.
-     * @return void
      *
      * @dataProvider getMissingSearchDatas
      */
@@ -86,7 +83,6 @@ class SearchTest extends TestCase
      * Tests that an exception is thrown
      * if datas are invalid.
      * @param mixed[] $invalidDatas des données invalides.
-     * @return void
      *
      * @dataProvider getInvalidSearchDatas
      */
@@ -101,7 +97,6 @@ class SearchTest extends TestCase
     /**
      * Tests that an exception is thrown
      * if the regex is unexpected.
-     * @return void
      */
     public function testCanThrownARangeExceptionWhenConstructingIfRegexIsNotValid(): void
     {
@@ -114,7 +109,6 @@ class SearchTest extends TestCase
 
     /**
      * Tests that the value can be returned.
-     * @return void
      *
      * @covers ::getValue
      */
@@ -126,7 +120,6 @@ class SearchTest extends TestCase
 
     /**
      * Tests that the regex can be returned false.
-     * @return void
      *
      * @covers ::getRegex
      */
@@ -138,7 +131,6 @@ class SearchTest extends TestCase
 
     /**
      * Tests that the regex can be returned true.
-     * @return void
      *
      * @covers ::getRegex
      */

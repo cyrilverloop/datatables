@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the list of columns for Datatables.
- * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Columns
  * @covers ::__construct
@@ -29,7 +28,6 @@ class ColumnsTest extends TestCase
 
     /**
      * Initialises tests.
-     * @return void
      */
     public function setUp(): void
     {
@@ -63,7 +61,6 @@ class ColumnsTest extends TestCase
      * Tests that an exception is thrown
      * if datas are missing.
      * @param mixed[] $missingColumnDatas missing search datas.
-     * @return void
      *
      * @covers ::addFromArray
      * @dataProvider getMissingColumnDatas
@@ -100,7 +97,6 @@ class ColumnsTest extends TestCase
      * Tests that an exception is thrown
      * if datas are invalid.
      * @param mixed[] $invalidColumnDatas invalid datas.
-     * @return void
      *
      * @covers ::addFromArray
      * @dataProvider getInvalidColumnDatas
@@ -134,7 +130,6 @@ class ColumnsTest extends TestCase
      * Tests that an exception is thrown
      * if datas are unexpected.
      * @param mixed[] $unexpectedColumnDatas unexpected datas.
-     * @return void
      *
      * @covers ::addFromArray
      * @dataProvider getUnexpectedColumnDatas
@@ -151,7 +146,6 @@ class ColumnsTest extends TestCase
     /**
      * Tests that a column can be added from an array
      * when "searchable" and "oderable" are "false".
-     * @return void
      *
      * @covers ::addFromArray
      * @uses \CyrilVerloop\Datatables\Column
@@ -184,7 +178,6 @@ class ColumnsTest extends TestCase
     /**
      * Tests that a column can be added from an array
      * when "searchable" and "oderable" are "true".
-     * @return void
      *
      * @covers ::addFromArray
      * @uses \CyrilVerloop\Datatables\Column
@@ -212,7 +205,6 @@ class ColumnsTest extends TestCase
 
     /**
      * Tests that an object can be constructed with datas.
-     * @return void
      *
      * @uses \CyrilVerloop\Datatables\Column
      * @uses \CyrilVerloop\Datatables\Columns
@@ -243,7 +235,6 @@ class ColumnsTest extends TestCase
     /**
      * Tests that an InvalidArgumentException is thrown
      * if the position does not exist.
-     * @return void
      *
      * @covers ::getColumn
      * @depends testCanABeConstructedWhenSearchableAndOrderableAreFalse
@@ -261,7 +252,6 @@ class ColumnsTest extends TestCase
 
     /**
      * Tests that a column can be added and found in the list.
-     * @return void
      *
      * @covers ::add
      * @covers ::getColumn
@@ -283,7 +273,6 @@ class ColumnsTest extends TestCase
 
     /**
      * Tests that the iterator can be rewinded.
-     * @return void
      *
      * @covers ::rewind
      * @uses \CyrilVerloop\Datatables\Column

@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the list of orders for Datatables.
- * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Orders
  * @covers ::__construct
@@ -29,7 +28,6 @@ class OrdersTest extends TestCase
 
     /**
      * Initialises tests.
-     * @return void
      */
     public function setUp(): void
     {
@@ -54,7 +52,6 @@ class OrdersTest extends TestCase
      * Tests that an exception is thrown
      * if datas are missing.
      * @param mixed[] $missingOrderDatas missing search datas.
-     * @return void
      *
      * @covers ::addFromArray
      * @dataProvider getMissingOrderDatas
@@ -69,7 +66,6 @@ class OrdersTest extends TestCase
 
     /**
      * Tests that an object can be constructed without data.
-     * @return void
      */
     public function testCanBeConstructedWithEmptyDatas(): void
     {
@@ -91,7 +87,6 @@ class OrdersTest extends TestCase
     /**
      * Tests that an object can be constructed with datas.
      * @param mixed[] $orderDatas order datas.
-     * @return void
      *
      * @covers ::addFromArray
      * @uses \CyrilVerloop\Datatables\Order
@@ -108,7 +103,6 @@ class OrdersTest extends TestCase
 
     /**
      * Tests that an order can be added.
-     * @return void
      *
      * @covers ::add
      * @uses \CyrilVerloop\Datatables\Order
@@ -129,7 +123,6 @@ class OrdersTest extends TestCase
 
     /**
      * Tests that the iterator can be rewinded.
-     * @return void
      *
      * @covers ::rewind
      * @uses \CyrilVerloop\Datatables\Order

@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests a column for Datatables.
- * @package \Bundles\CrudBundle\Tests\Datatables
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Column
  * @covers ::__construct
@@ -29,7 +28,6 @@ class ColumnTest extends TestCase
 
     /**
      * Initialises tests.
-     * @return void
      */
     public function setUp(): void
     {
@@ -39,7 +37,6 @@ class ColumnTest extends TestCase
 
     /**
      * Tests that data can be accessed.
-     * @return void
      *
      * @covers ::getData
      */
@@ -51,7 +48,6 @@ class ColumnTest extends TestCase
 
     /**
      * Tests if the column can be searched.
-     * @return void
      *
      * @covers ::isSearchable
      */
@@ -63,7 +59,6 @@ class ColumnTest extends TestCase
 
     /**
      * Tests if the column can be ordered.
-     * @return void
      *
      * @covers ::isOrderable
      */

@@ -6,7 +6,6 @@ namespace CyrilVerloop\Datatables;
 
 /**
  * A class representing a column for DataTables.
- * @package \CyrilVerloop\Datatables
  */
 class Column
 {

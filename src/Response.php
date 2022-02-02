@@ -6,7 +6,6 @@ namespace CyrilVerloop\Datatables;
 
 /**
  * The response to DataTables.
- * @package \CyrilVerloop\Datatables
  */
 class Response implements \JsonSerializable
 {
