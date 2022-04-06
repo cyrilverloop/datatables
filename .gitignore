@@ -1,4 +1,4 @@
-/build/cache/
-/build/phpunit/
+/ci/cache/
+/ci/phpunit/
 /tools/
 /vendor/

@@ -90,7 +90,7 @@ jobs:
       run:  tar -xf project.tar
 
     - name: Run PHPUnit test
-      run: ./tools/phpunit -c ./build/phpunit.xml
+      run: ./tools/phpunit -c ./ci/phpunit.xml
 
   static-analysis:
     needs: phplint
@@ -105,4 +105,4 @@ jobs:
       run:  tar -xf project.tar
 
     - name: Run Psalm
-      run: cd build/ && ../tools/psalm --shepherd --no-cache
+      run: cd ci/ && ../tools/psalm --shepherd --no-cache
