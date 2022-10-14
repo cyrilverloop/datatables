@@ -12,14 +12,14 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Validate composer.json and composer.lock
       run: composer validate
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: vendor
         key: composer-lock-${{ hashFiles('**/composer.lock') }}
@@ -30,7 +30,7 @@ jobs:
 
     - name: Cache phive packages
       id: phive-tools-cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: tools
         key: phive-tools-${{ hashFiles('**/phive.xml') }}
@@ -42,7 +42,7 @@ jobs:
     - name: 'Tar project'
       run: tar -cf project.tar .
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: installed-project
         path: project.tar
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: installed-project
 
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: installed-project
 
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: installed-project
 
@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: installed-project
 
