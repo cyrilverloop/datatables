@@ -72,6 +72,12 @@ The generated outputs will be in `./ci/phpunit/`.
 Look at `./ci/phpunit/html/index.html` for code coverage
 and `./ci/phpunit/testdox.html` for a verbose list of passing / failing tests.
 
+To run mutation testing, you must run PHPUnit first, then :
+```shellsession
+user@host resto-api$ ./tools/infection -c./ci/infection.json
+```
+The generated outputs will be in `./ci/infection/`.
+
 ### Static analysis
 
 To do a static analysis :
