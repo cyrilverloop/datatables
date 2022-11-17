@@ -1,4 +1,5 @@
 /ci/cache/
+/ci/infection/
 /ci/phpdoc/
 /ci/phpunit/
 /tools/
