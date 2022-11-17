@@ -66,6 +66,20 @@ class OrdersTest extends TestCase
     }
 
     /**
+     * Tests that an exception is thrown
+     * if the order direction is neither 'asc' nor 'desc'.
+     *
+     * @covers ::addFromArray
+     */
+    public function testCanThrownADomainExceptionWhenDirectionIsNeitherAscNorDesc(): void
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('order.dir.notExist');
+
+        new Orders([['column' => 1, 'dir' => 5]]);
+    }
+
+    /**
      * Tests that an object can be constructed without data.
      */
     public function testCanBeConstructedWithEmptyDatas(): void
@@ -80,8 +94,8 @@ class OrdersTest extends TestCase
     public function getOrderDatas(): array
     {
         return [
-            'when dir is Order::DIR_ASC' => [[['column' => '1', 'dir' => Order::DIR_ASC]]],
-            'when dir is Order::DIR_DESC' => [[['column' => '1', 'dir' => Order::DIR_DESC]]]
+            'when dir is asc' => [[['column' => '1', 'dir' => 'asc']]],
+            'when dir is desc' => [[['column' => '1', 'dir' => 'desc']]]
         ];
     }
 
@@ -132,7 +146,7 @@ class OrdersTest extends TestCase
      */
     public function testCanRewind(): void
     {
-        $order = new Order(1, 'asc');
+        $order = new Order(1, Direction::Ascending);
         $this->orders->add($order);
         $this->orders->add($order);
 

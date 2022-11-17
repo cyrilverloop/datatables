@@ -48,7 +48,13 @@ class Orders extends IntPosition
             throw new \OutOfBoundsException('orders.key.notExist');
         }
 
-        $this->list[] = new Order((int)$orderDatas['column'], (string)$orderDatas['dir']);
+        $dir = Direction::tryFrom((string) $orderDatas['dir']);
+
+        if($dir === null) {
+           throw new \DomainException('order.dir.notExist');
+        }
+
+        $this->list[] = new Order((int)$orderDatas['column'], $dir);
     }
 
     /**

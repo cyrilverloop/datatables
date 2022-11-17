@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Documentation for continuous integration.
+- `Order::DIR_ASC` and `Order::DIR_DESC` are replaced by `Direction` enumeration.
+- Requires PHP 8.1 as a minimum version.
 
 ## [3.1.0] - 2022-04-06
 ### Added

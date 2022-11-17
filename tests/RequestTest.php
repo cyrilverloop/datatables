@@ -73,7 +73,7 @@ class RequestTest extends TestCase
         $this->orders = [
             [
                 'column' => '0',
-                'dir' => Order::DIR_DESC
+                'dir' => 'desc'
             ]
         ];
 
@@ -107,6 +107,7 @@ class RequestTest extends TestCase
         ];
 
         return [
+            'when ???' => [[], [], -1, -2, $search],
             'when start is negative' => [[], [], -1, 1, $search],
             'when length is zero' => [[], [], 0, 0, $search],
             'when length is less than minus one' => [[], [], 0, -2, $search],
@@ -228,7 +229,7 @@ class RequestTest extends TestCase
      */
     public function testCanThrowAnOutOfBoundsExceptionIfOrderByANonOrderablaColumn(): void
     {
-        $this->orders = [['column' => '0', 'dir' => Order::DIR_DESC]];
+        $this->orders = [['column' => '0', 'dir' => 'desc']];
         $this->columns = [[
             'data' => 'data',
             'searchable' => 'true',
@@ -262,7 +263,7 @@ class RequestTest extends TestCase
      */
     public function testCanGetOrderBy(): void
     {
-        $this->orders = [['column' => '0', 'dir' => Order::DIR_DESC]];
+        $this->orders = [['column' => '0', 'dir' => 'desc']];
         $this->columns = [[
             'data' => 'data',
             'searchable' => 'true',
@@ -280,6 +281,6 @@ class RequestTest extends TestCase
         $orderBy = $this->request->getOrderBy();
 
         self::assertArrayHasKey('data', $orderBy, 'The array must have a "data" key.');
-        self::assertSame(Order::DIR_DESC, $orderBy['data'], 'The value must be ' . Order::DIR_DESC . '.');
+        self::assertSame('desc', $orderBy['data'], 'The direction must be "desc".');
     }
 }

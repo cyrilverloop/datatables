@@ -1,6 +1,6 @@
 {
     "name": "cyril-verloop/datatables",
-    "description": "A library to use DataTables with PHP 8.0+.",
+    "description": "A library to use DataTables with PHP 8.1+.",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -14,7 +14,7 @@
         }
     },
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "cyril-verloop/iterator": "^3.0"
     },
     "authors": [

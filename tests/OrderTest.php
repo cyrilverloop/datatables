@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CyrilVerloop\Datatables;
 
+use CyrilVerloop\Datatables\Direction;
 use CyrilVerloop\Datatables\Order;
 use PHPUnit\Framework\TestCase;
 
@@ -31,18 +32,6 @@ class OrderTest extends TestCase
     }
 
     /**
-     * Tests that an object can not be constructed
-     * if the direction is invalid.
-     */
-    public function testCanThrowADomainExceptionWhenDirIsInvalid(): void
-    {
-        $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('order.dir.notExist');
-
-        new Order(0, 'test');
-    }
-
-    /**
      * Tests that the column can be returned.
      *
      * @covers ::getColumn
@@ -61,9 +50,9 @@ class OrderTest extends TestCase
      */
     public function testCanGetAscDirection(): void
     {
-        $order = new Order(0, 'asc');
+        $order = new Order(0, Direction::Ascending);
 
-        self::assertSame('asc', $order->getDir(), 'The direction must be "asc".');
+        self::assertSame(Direction::Ascending, $order->getDir(), 'The direction must be "asc".');
     }
 
     /**
@@ -73,8 +62,8 @@ class OrderTest extends TestCase
      */
     public function testCanGetDescDirection(): void
     {
-        $order = new Order(0, 'desc');
+        $order = new Order(0, Direction::Descending);
 
-        self::assertSame('desc', $order->getDir(), 'The direction must be "desc".');
+        self::assertSame(Direction::Descending, $order->getDir(), 'The direction must be "desc".');
     }
 }

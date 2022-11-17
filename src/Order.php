@@ -9,19 +9,6 @@ namespace CyrilVerloop\Datatables;
  */
 class Order
 {
-    // Constantes :
-
-    /**
-     * Ascending order.
-     */
-    public const DIR_ASC = 'asc';
-
-    /**
-     * Discending order.
-     */
-    public const DIR_DESC = 'desc';
-
-
     // Properties :
 
     /**
@@ -30,9 +17,9 @@ class Order
     protected int $column;
 
     /**
-     * @var string the direction (asc/desc).
+     * @var \CyrilVerloop\Datatables\Direction the direction (asc/desc).
      */
-    protected string $dir;
+    protected Direction $dir;
 
 
     // Magic methods :
@@ -40,24 +27,15 @@ class Order
     /**
      * The constructor.
      * @param int $column the priority.
-     * @param string $dir the direction (asc/desc).
+     * @param \CyrilVerloop\Datatables\Direction $dir the direction (asc/desc).
      * @throws \DomainException If the column number (order priority) is negative.
      * @throws \DomainException if the direction is neither "asc" nor "desc".
      */
-    public function __construct(int $column, string $dir = self::DIR_ASC)
+    public function __construct(int $column, Direction $dir = Direction::Ascending)
     {
         // If the column number (order priority) is negative :
         if ($column < 0) {
             throw new \DomainException('order.column.negativeValue');
-        }
-
-
-        // Throws an exception if the direction is neither "asc" nor "desc" :
-        if (
-            $dir !== self::DIR_ASC &&
-            $dir !== self::DIR_DESC
-        ) {
-            throw new \DomainException('order.dir.notExist');
         }
 
         $this->column = $column;
@@ -77,9 +55,9 @@ class Order
 
     /**
      * Returns the direction (asc/desc).
-     * @return string the direction (asc/desc).
+     * @return \CyrilVerloop\Datatables\Direction the direction (asc/desc).
      */
-    public function getDir(): string
+    public function getDir(): Direction
     {
         return $this->dir;
     }

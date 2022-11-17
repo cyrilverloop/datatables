@@ -122,7 +122,7 @@ class Request
             }
 
             // field name => asc/desc :
-            $orderBy[$column->getData()] = $order->getDir();
+            $orderBy[$column->getData()] = $order->getDir()->value;
         }
 
         return $orderBy;
