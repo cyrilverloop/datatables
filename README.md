@@ -60,27 +60,26 @@ $response = new Response($draw, $data, $recordsTotal, $recordsFiltered);
 ```
 
 
-## Development
+## Continuous integration
 
-You can install development tools through Phive :
-```shellsession
-user@host datatables$ phive install
-```
+### Tests
 
-## PHPUnit
-
-To execute tests :
+To run the tests :
 ```shellsession
 user@host datatables$ ./tools/phpunit -c ./ci/phpunit.xml
 ```
-The generated coverage report will be in `./ci/phpunit/`.
+The generated outputs will be in `./ci/phpunit/`.
+Look at `./ci/phpunit/html/index.html` for code coverage
+and `./ci/phpunit/testdox.html` for a verbose list of passing / failing tests.
 
-## Psalm
+### Static analysis
 
-To verify the code with Psalm :
+To do a static analysis :
 ```shellsession
-user@host datatables$ ./tools/psalm -c ./ci/psalm.xml
+user@host resto-api$ ./tools/psalm -c ./ci/psalm.xml [--report=./psalm/psalm.txt --output-format=text]
 ```
+Use "--report=./psalm/psalm.txt --output-format=text"
+if you want the output in a file instead of on screen.
 
 ## PHPDoc
 
@@ -89,4 +88,3 @@ To generate the PHPDoc :
 user@host datatables$ ./tools/phpdocumentor --config ./ci/phpdoc.xml
 ```
 The generated HTML documentation will be in `./ci/phpdoc/`.
-
