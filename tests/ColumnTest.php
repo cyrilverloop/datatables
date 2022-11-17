@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @coversDefaultClass \CyrilVerloop\Datatables\Column
  * @covers ::__construct
  * @uses \CyrilVerloop\Datatables\Search
+ * @group column
  */
 class ColumnTest extends TestCase
 {

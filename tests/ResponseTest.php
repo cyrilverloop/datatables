@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Response
  * @covers ::__construct
+ * @group response
  */
 class ResponseTest extends TestCase
 {

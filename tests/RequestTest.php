@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Request
  * @covers ::__construct
+ * @group request
  */
 class RequestTest extends TestCase
 {

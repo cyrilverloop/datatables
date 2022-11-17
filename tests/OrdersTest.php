@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Orders
  * @covers ::__construct
+ * @group orders
  */
 class OrdersTest extends TestCase
 {

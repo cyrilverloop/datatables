@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Search
  * @covers ::__construct
+ * @group search
  */
 class SearchTest extends TestCase
 {
