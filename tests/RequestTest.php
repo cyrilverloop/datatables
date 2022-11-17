@@ -263,7 +263,7 @@ class RequestTest extends TestCase
     public function testCanGetOrderBy(): void
     {
         $this->orders = [['column' => '0', 'dir' => Order::DIR_DESC]];
-        $this->scolumns = [[
+        $this->columns = [[
             'data' => 'data',
             'searchable' => 'true',
             'orderable' => 'true'
