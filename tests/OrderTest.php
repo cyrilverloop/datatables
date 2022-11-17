@@ -15,30 +15,13 @@ use PHPUnit\Framework\TestCase;
  */
 class OrderTest extends TestCase
 {
-    // Properties :
-
-    /**
-     * @var \CyrilVerloop\Datatables\Order the order.
-     */
-    protected Order $order;
-
-
     // Methods :
-
-    /**
-     * Initialises tests.
-     */
-    public function setUp(): void
-    {
-        $this->order = new Order(0);
-    }
-
 
     /**
      * Tests that an object can not be constructed
      * if the column number is negative.
      */
-    public function testCanNotBeConstructedWhenColumnIsNegative(): void
+    public function testCanThrowADomainExceptionWhenColumnIsNegative(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('order.column.negativeValue');
@@ -50,7 +33,7 @@ class OrderTest extends TestCase
      * Tests that an object can not be constructed
      * if the direction is invalid.
      */
-    public function testCanNotBeConstructedWhenDirIsInvalid(): void
+    public function testCanThrowADomainExceptionWhenDirIsInvalid(): void
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('order.dir.notExist');
@@ -59,31 +42,38 @@ class OrderTest extends TestCase
     }
 
     /**
-     * Returns valid column numbers and directions.
-     * @return mixed[] valid column numbers and directions.
+     * Tests that the column can be returned.
+     *
+     * @covers ::getColumn
      */
-    public function getValidColumnAndDir(): array
+    public function testCanGetColumn(): void
     {
-        return [
-            'when the direction is asc' => [0, 'asc'],
-            'when the direction is desc' => [0, 'desc']
-        ];
+        $order = new Order(0);
+
+        self::assertSame(0, $order->getColumn(), 'The column must be 0 (zero).');
     }
 
     /**
-     * Tests that an object can be constructed.
-     * @param int $column the column number.
-     * @param string $dir the direction (asc/desc).
+     * Tests that the ASC direction can be returned.
      *
-     * @covers ::getColumn
      * @covers ::getDir
-     * @dataProvider getValidColumnAndDir
      */
-    public function testCanBeConstructed(int $column, string $dir): void
+    public function testCanGetAscDirection(): void
     {
-        $this->order = new Order($column, $dir);
+        $order = new Order(0, 'asc');
 
-        self::assertSame($column, $this->order->getColumn(), 'The column must be 0 (zero).');
-        self::assertSame($dir, $this->order->getDir(), 'The direction must be asc/desc.');
+        self::assertSame('asc', $order->getDir(), 'The direction must be "asc".');
+    }
+
+    /**
+     * Tests that the ASC direction can be returned.
+     *
+     * @covers ::getDir
+     */
+    public function testCanGetDescDirection(): void
+    {
+        $order = new Order(0, 'desc');
+
+        self::assertSame('desc', $order->getDir(), 'The direction must be "desc".');
     }
 }
