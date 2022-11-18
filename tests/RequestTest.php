@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @covers ::__construct
  * @group request
  */
-class RequestTest extends TestCase
+final class RequestTest extends TestCase
 {
     // Properties :
 

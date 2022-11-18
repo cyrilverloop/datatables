@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  * @covers ::__construct
  * @group columns
  */
-class ColumnsTest extends TestCase
+final class ColumnsTest extends TestCase
 {
     // Properties :
 

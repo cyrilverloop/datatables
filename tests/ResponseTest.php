@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @covers ::__construct
  * @group response
  */
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
     // Properties :
 

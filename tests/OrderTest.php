@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  * @covers ::__construct
  * @group order
  */
-class OrderTest extends TestCase
+final class OrderTest extends TestCase
 {
     // Methods :
 

@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  * @uses \CyrilVerloop\Datatables\Search
  * @group column
  */
-class ColumnTest extends TestCase
+final class ColumnTest extends TestCase
 {
     // Properties :
 

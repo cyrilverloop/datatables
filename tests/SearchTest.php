@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @covers ::__construct
  * @group search
  */
-class SearchTest extends TestCase
+final class SearchTest extends TestCase
 {
     // Properties :
 
