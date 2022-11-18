@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CyrilVerloop\Datatables;
 
-use CyrilVerloop\Datatables\Order;
 use CyrilVerloop\Datatables\Request;
 use PHPUnit\Framework\TestCase;
 
