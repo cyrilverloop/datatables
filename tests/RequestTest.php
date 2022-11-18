@@ -106,7 +106,6 @@ class RequestTest extends TestCase
         ];
 
         return [
-            'when ???' => [[], [], -1, -2, $search],
             'when start is negative' => [[], [], -1, 1, $search],
             'when length is zero' => [[], [], 0, 0, $search],
             'when length is less than minus one' => [[], [], 0, -2, $search],
