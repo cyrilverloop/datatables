@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "776442d740fc1f3cfda60a50fe30c276",
+    "content-hash": "6264e11c8e9adfd150b15b4075df2f29",
     "packages": [
         {
             "name": "cyril-verloop/iterator",
@@ -54,7 +54,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.0"
+        "php": ">=8.1"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
