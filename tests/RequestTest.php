@@ -12,36 +12,16 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Request
  * @covers ::__construct
+ * @uses \CyrilVerloop\Datatables\Column
+ * @uses \CyrilVerloop\Datatables\Columns
+ * @uses \CyrilVerloop\Datatables\Order
+ * @uses \CyrilVerloop\Datatables\Orders
+ * @uses \CyrilVerloop\Datatables\Search
  * @group request
  */
 final class RequestTest extends TestCase
 {
     // Properties :
-
-    /**
-     * @var mixed[] the columns.
-     */
-    protected array $columns;
-
-    /**
-     * @var mixed[] the orders (column/direction).
-     */
-    protected array $orders;
-
-    /**
-     * @var int the starting point.
-     */
-    protected int $start;
-
-    /**
-     * @var int the length.
-     */
-    protected int $length;
-
-    /**
-     * @var mixed[] the search elements.
-     */
-    protected array $search;
 
     /**
      * @var \CyrilVerloop\Datatables\Request the request.
@@ -52,11 +32,12 @@ final class RequestTest extends TestCase
     // Methods :
 
     /**
-     * Initialises tests.
+     * Returns different columns.
+     * @return array different columns.
      */
-    public function setUp(): void
+    private function getColumns(): array
     {
-        $this->columns = [
+        return [
             [
                 'data' => 'data',
                 'searchable' => 'true',
@@ -66,31 +47,48 @@ final class RequestTest extends TestCase
                 'data' => 'data2',
                 'searchable' => 'false',
                 'orderable' => 'false'
+            ],
+            [
+                'data' => 'data3',
+                'searchable' => 'true',
+                'orderable' => 'false'
+            ],
+            [
+                'data' => 'data4',
+                'searchable' => 'false',
+                'orderable' => 'true'
             ]
         ];
+    }
 
-        $this->orders = [
+    /**
+     * Returns different orders.
+     * @return array different orders.
+     */
+    private function getOrders(): array
+    {
+        return [
             [
                 'column' => '0',
+                'dir' => 'asc'
+            ],
+            [
+                'column' => '1',
                 'dir' => 'desc'
             ]
         ];
+    }
 
-        $this->start = 0;
-        $this->length = 1;
-
-        $this->search = [
+    /**
+     * Returns search parameters.
+     * @return array search parameters.
+     */
+    private function getSearch(): array
+    {
+        return [
             'value' => 'value',
             'regex' => 'false'
         ];
-
-        $this->request = new Request(
-            $this->columns,
-            $this->orders,
-            $this->start,
-            $this->length,
-            $this->search
-        );
     }
 
 
@@ -98,36 +96,26 @@ final class RequestTest extends TestCase
      * Returns the elements to test the exceptions.
      * @return mixed[] the elements to test the exceptions.
      */
-    public function getParametersForConstructorRangeExceptions(): array
+    public function getParametersForRangeExceptions(): array
     {
-        $search = [
-            'value' => '',
-            'regex' => 'false'
-        ];
-
         return [
-            'when start is negative' => [[], [], -1, 1, $search],
-            'when length is zero' => [[], [], 0, 0, $search],
-            'when length is less than minus one' => [[], [], 0, -2, $search],
+            'when start is negative' => [[], [], -1, 1, $this->getSearch()],
+            'when length is zero' => [[], [], 0, 0, $this->getSearch()],
+            'when length is less than minus one' => [[], [], 0, -2, $this->getSearch()],
         ];
     }
 
     /**
-     * Tests that an \RangeException is thrown when constructed.
+     * Tests that an \RangeException is thrown.
      * @param mixed[] $columns the columns.
      * @param mixed[] $order the order (column/direction).
      * @param int $start the starting point.
      * @param int $length the length.
      * @param mixed[] $search the elements for the search.
      *
-     * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
-     * @uses \CyrilVerloop\Datatables\Order
-     * @uses \CyrilVerloop\Datatables\Orders
-     * @uses \CyrilVerloop\Datatables\Search
-     * @dataProvider getParametersForConstructorRangeExceptions
+     * @dataProvider getParametersForRangeExceptions
      */
-    public function testConstructorCanThrowARangeException(
+    public function testCanThrowARangeException(
         array $columns,
         array $order,
         int $start,
@@ -145,25 +133,23 @@ final class RequestTest extends TestCase
      * Tests that no criteria is returned.
      *
      * @covers ::getCriterias
-     * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
-     * @uses \CyrilVerloop\Datatables\Order
-     * @uses \CyrilVerloop\Datatables\Orders
-     * @uses \CyrilVerloop\Datatables\Search
      */
     public function testCanGetEmptyCriteria(): void
     {
-        $this->search['value'] = '';
+        $search = [
+            'value' => '',
+            'regex' => 'false'
+        ];
 
-        $this->request = new Request(
-            $this->columns,
-            $this->orders,
-            $this->start,
-            $this->length,
-            $this->search
+        $request = new Request(
+            $this->getColumns(),
+            $this->getOrders(),
+            0,
+            -1,
+            $search
         );
 
-        $criteria = $this->request->getCriterias();
+        $criteria = $request->getCriterias();
 
         self::assertSame([], $criteria, 'Criteria must be empty.');
     }
@@ -172,19 +158,22 @@ final class RequestTest extends TestCase
      * Tests that criterias are returned.
      *
      * @covers ::getCriterias
-     * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
-     * @uses \CyrilVerloop\Datatables\Order
-     * @uses \CyrilVerloop\Datatables\Orders
-     * @uses \CyrilVerloop\Datatables\Search
      */
     public function testCanGetCriteria(): void
     {
-        $criterias = $this->request->getCriterias();
+        $request = new Request(
+            $this->getColumns(),
+            $this->getOrders(),
+            0,
+            -1,
+            $this->getSearch()
+        );
+        $criterias = $request->getCriterias();
 
         self::assertArrayHasKey('data', $criterias, 'The array must have a "data" key.');
         self::assertArrayNotHasKey('data2', $criterias, 'The array must not have a "data2" key.');
         self::assertSame('value', $criterias['data'], 'The value to search must be test.');
+        self::assertArrayHasKey('data3', $criterias, 'The array must have a "data3" key.');
     }
 
 
@@ -193,23 +182,18 @@ final class RequestTest extends TestCase
      * if there is no order.
      *
      * @covers ::getOrderBy
-     * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
-     * @uses \CyrilVerloop\Datatables\Order
-     * @uses \CyrilVerloop\Datatables\Orders
-     * @uses \CyrilVerloop\Datatables\Search
      */
     public function testCanHaveEmptyOrderByWhenThereIsNoOrders(): void
     {
-        $this->request = new Request(
-            $this->columns,
+        $request = new Request(
+            $this->getColumns(),
             [],
-            $this->start,
-            $this->length,
-            $this->search
+            0,
+            -1,
+            $this->getSearch()
         );
 
-        self::assertSame([], $this->request->getOrderBy(), 'The value must be an empty array.');
+        self::assertSame([], $request->getOrderBy(), 'The value must be an empty array.');
     }
 
 
@@ -218,34 +202,28 @@ final class RequestTest extends TestCase
      * when it is impossible to order on a column.
      *
      * @covers ::getOrderBy
-     * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
-     * @uses \CyrilVerloop\Datatables\Order
-     * @uses \CyrilVerloop\Datatables\Orders
-     * @uses \CyrilVerloop\Datatables\Request
-     * @uses \CyrilVerloop\Datatables\Search
      */
     public function testCanThrowAnOutOfBoundsExceptionIfOrderByANonOrderablaColumn(): void
     {
-        $this->orders = [['column' => '0', 'dir' => 'desc']];
-        $this->columns = [[
+        $columns = [[
             'data' => 'data',
             'searchable' => 'true',
             'orderable' => 'false'
         ]];
+        $orders = [['column' => '0', 'dir' => 'desc']];
 
-        $this->request = new Request(
-            $this->columns,
-            $this->orders,
-            $this->start,
-            $this->length,
-            $this->search
+        $request = new Request(
+            $columns,
+            $orders,
+            0,
+            -1,
+            $this->getSearch()
         );
 
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessage('request.orderBy.columnNotOrderable');
 
-        $this->request->getOrderBy();
+        $request->getOrderBy();
     }
 
 
@@ -253,32 +231,33 @@ final class RequestTest extends TestCase
      * Tests that the order is returned.
      *
      * @covers ::getOrderBy
-     * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
-     * @uses \CyrilVerloop\Datatables\Order
-     * @uses \CyrilVerloop\Datatables\Orders
-     * @uses \CyrilVerloop\Datatables\Search
      */
     public function testCanGetOrderBy(): void
     {
-        $this->orders = [['column' => '0', 'dir' => 'desc']];
-        $this->columns = [[
-            'data' => 'data',
-            'searchable' => 'true',
-            'orderable' => 'true'
-        ]];
+        $orders = [
+            [
+                'column' => '0',
+                'dir' => 'asc'
+            ],
+            [
+                'column' => '3',
+                'dir' => 'desc'
+            ]
+        ];
 
-        $this->request = new Request(
-            $this->columns,
-            $this->orders,
-            $this->start,
-            $this->length,
-            $this->search
+        $request = new Request(
+            $this->getColumns(),
+            $orders,
+            0,
+            -1,
+            $this->getSearch()
         );
 
-        $orderBy = $this->request->getOrderBy();
+        $orderBy = $request->getOrderBy();
 
         self::assertArrayHasKey('data', $orderBy, 'The array must have a "data" key.');
-        self::assertSame('desc', $orderBy['data'], 'The direction must be "desc".');
+        self::assertSame('asc', $orderBy['data'], 'The direction must be "asc".');
+        self::assertArrayHasKey('data4', $orderBy, 'The array must have a "data4" key.');
+        self::assertSame('desc', $orderBy['data4'], 'The direction must be "desc".');
     }
 }
