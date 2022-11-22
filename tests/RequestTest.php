@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CyrilVerloop\Datatables;
+namespace CyrilVerloop\Datatables\Tests;
 
 use CyrilVerloop\Datatables\Request;
 use PHPUnit\Framework\TestCase;
