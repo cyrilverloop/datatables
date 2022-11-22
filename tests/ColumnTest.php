@@ -17,33 +17,27 @@ use PHPUnit\Framework\TestCase;
  */
 final class ColumnTest extends TestCase
 {
-    // Properties :
-
-    /**
-     * @var \CyrilVerloop\Datatables\Column the column.
-     */
-    protected Column $column;
-
-
     // Methods :
 
-    /**
-     * Initialises tests.
-     */
-    public function setUp(): void
+    private function getParametersForGetData(): array
     {
-        $this->column = new Column();
+        return [
+            "data is empty" => [''],
+            "data is 'data'" => ['data']
+        ];
     }
 
-
     /**
-     * Tests that data can be accessed.
+     * Tests that the data can be accessed.
      *
      * @covers ::getData
+     * @dataProvider getParametersForGetData
      */
-    public function testCanGetData(): void
+    public function testCanGiveItsData(string $data): void
     {
-        self::assertSame('', $this->column->getData(), 'Data must be an empty string.');
+        $column = new Column($data);
+
+        self::assertSame($data, $column->getData());
     }
 
 
@@ -52,9 +46,23 @@ final class ColumnTest extends TestCase
      *
      * @covers ::isSearchable
      */
-    public function testCanGetSearchable(): void
+    public function testCanGiveASearchableState(): void
     {
-        self::assertFalse($this->column->isSearchable(), 'The column must not be searchable.');
+        $column = new Column(searchable: true);
+
+        self::assertTrue($column->isSearchable());
+    }
+
+    /**
+     * Tests if the column can not be searched.
+     *
+     * @covers ::isSearchable
+     */
+    public function testCanGiveANonSearchableState(): void
+    {
+        $column = new Column();
+
+        self::assertFalse($column->isSearchable());
     }
 
 
@@ -63,8 +71,22 @@ final class ColumnTest extends TestCase
      *
      * @covers ::isOrderable
      */
-    public function testCanGetOrderable(): void
+    public function testCanGiveAnOrderableState(): void
     {
-        self::assertFalse($this->column->isOrderable(), 'The column must not be orderable.');
+        $column = new Column(orderable: true);
+
+        self::assertTrue($column->isOrderable());
+    }
+
+    /**
+     * Tests if the column can not be ordered.
+     *
+     * @covers ::isOrderable
+     */
+    public function testCanGiveANonOrderableState(): void
+    {
+        $column = new Column();
+
+        self::assertFalse($column->isOrderable());
     }
 }
