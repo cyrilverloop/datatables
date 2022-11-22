@@ -31,24 +31,26 @@ final class OrderTest extends TestCase
         new Order(-1);
     }
 
+
     /**
      * Tests that the column can be returned.
      *
      * @covers ::getColumn
      */
-    public function testCanGetColumn(): void
+    public function testCanGiveItsColumn(): void
     {
         $order = new Order(0);
 
-        self::assertSame(0, $order->getColumn(), 'The column must be 0 (zero).');
+        self::assertSame(0, $order->getColumn());
     }
+
 
     /**
      * Tests that the ASC direction can be returned.
      *
      * @covers ::getDir
      */
-    public function testCanGetAscDirection(): void
+    public function testCanGiveAnAscDirection(): void
     {
         $order = new Order(0, Direction::Ascending);
 
@@ -60,7 +62,7 @@ final class OrderTest extends TestCase
      *
      * @covers ::getDir
      */
-    public function testCanGetDescDirection(): void
+    public function testCanGiveAnDescDirection(): void
     {
         $order = new Order(0, Direction::Descending);
 
