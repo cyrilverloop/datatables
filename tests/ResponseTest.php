@@ -16,60 +16,31 @@ use PHPUnit\Framework\TestCase;
  */
 final class ResponseTest extends TestCase
 {
-    // Properties :
-
     /**
-     * @var \CyrilVerloop\Datatables\Response the response.
+     * Returns datas to test the RangeExceptions.
+     * @return mixed[] datas to test the RangeExceptions.
      */
-    protected Response $response;
-
-    /**
-     * @var mixed[] the datas.
-     */
-    protected array $data;
-
-
-    // Methods :
-
-    /**
-     * Initialises tests.
-     */
-    public function setUp(): void
-    {
-        $this->data = [
-            'data1',
-            'data2'
-        ];
-
-        $this->response = new Response(1, $this->data, 2, 2);
-    }
-
-
-    /**
-     * Returns datas to test the constructor's RangeExceptions.
-     * @return mixed[] datas to test the constructor's RangeExceptions.
-     */
-    public function getParametersForConstructorRangeExceptions(): array
+    public function getParametersForRangeExceptions(): array
     {
         $datas = ['data1','data2'];
 
         return [
-            'when draw is less than one' => [0, $datas, 0, 0],
-            'when records total is negative' => [1, $datas, -1, 0],
-            'when length is less than minus one' => [1, $datas, 0, -1]
+            'draw is less than one' => [0, $datas, 0, 0],
+            'records total is negative' => [1, $datas, -1, 0],
+            'length is negative' => [1, $datas, 0, -1]
         ];
     }
 
     /**
-     * Tests that a \RangeException is thrown when the object is constructed.
+     * Tests that a \RangeException is thrown.
      * @param int $draw the number of time the array is drawn.
      * @param mixed[] $data the datas.
      * @param int $recordsTotal the number of records.
      * @param int $recordsFiltered the number of filtered records.
      *
-     * @dataProvider getParametersForConstructorRangeExceptions
+     * @dataProvider getParametersForRangeExceptions
      */
-    public function testConstructorCanThrowARangeException(
+    public function testThrowsARangeException(
         int $draw,
         array $data,
         int $recordsTotal,
@@ -81,31 +52,32 @@ final class ResponseTest extends TestCase
         new Response($draw, $data, $recordsTotal, $recordsFiltered);
     }
 
+
     /**
-     * Returns datas to test the constructor's LogicExceptions.
-     * @return mixed[] datas to test the constructor's LogicExceptions.
+     * Returns datas to test the LogicExceptions.
+     * @return mixed[] datas to test the LogicExceptions.
      */
-    public function getParametersForConstructorLogicExceptions(): array
+    public function getParametersForLogicExceptions(): array
     {
         $datas = ['data1','data2'];
 
         return [
-            'when records total is less than records filtered' => [1, $datas, 1, 2],
-            'when records total is less than datas count' => [1, $datas, 1, 1],
-            'when records filtered is less than datas count' => [1, $datas, 2, 1]
+            'records total is less than records filtered' => [1, $datas, 1, 2],
+            'records total is less than datas count' => [1, $datas, 1, 1],
+            'records filtered is less than datas count' => [1, $datas, 2, 1]
         ];
     }
 
     /**
-     * Tests that a \LogicException is thrown when the object is constructed.
+     * Tests that a \LogicException is thrown.
      * @param int $draw the number of time the array is drawn.
      * @param mixed[] $data the datas.
      * @param int $recordsTotal the number of records.
      * @param int $recordsFiltered the number of filtered records.
      *
-     * @dataProvider getParametersForConstructorLogicExceptions
+     * @dataProvider getParametersForLogicExceptions
      */
-    public function testConstructorCanThrowALogicException(
+    public function testThrowsALogicException(
         int $draw,
         array $data,
         int $recordsTotal,
@@ -119,22 +91,51 @@ final class ResponseTest extends TestCase
 
 
     /**
-     * Tests that the object can be serialized.
+     * Returns datas to test jsonSerialize.
+     * @return mixed[] datas to test jsonSerialize.
+     */
+    public function getParametersForJsonSerialize(): array
+    {
+        $data = [
+            'data1',
+            'data2'
+        ];
+
+        return [
+            'non filtered datas' => [1, $data, 10, 10],
+            'filtered datas' => [1, $data, 10, 5],
+            'empty non filtered datas' => [1, [], 0, 0],
+            'empty filtered datas' => [1, [], 10, 0]
+        ];
+    }
+
+    /**
+     * Tests that the object can be json serialized.
+     * @param int $draw the number of time the array is drawn.
+     * @param mixed[] $data the datas.
+     * @param int $recordsTotal the number of records.
+     * @param int $recordsFiltered the number of filtered records.
      *
      * @covers ::jsonSerialize
+     * @dataProvider getParametersForJsonSerialize
      */
-    public function testCanJsonSerialize(): void
-    {
-        $serialized = $this->response->jsonSerialize();
+    public function testCanJsonSerialize(
+        int $draw,
+        array $data,
+        int $recordsTotal,
+        int $recordsFiltered
+    ): void {
+        $response = new Response($draw, $data, $recordsTotal, $recordsFiltered);
+        $unserializedResponse = json_decode(json_encode($response), false);
 
-        self::assertArrayHasKey('draw', $serialized, 'The array must have a draw key.');
-        self::assertArrayHasKey('data', $serialized, 'The array must have a data key.');
-        self::assertArrayHasKey('recordsTotal', $serialized, 'The array must have a recordsTotal key.');
-        self::assertArrayHasKey('recordsFiltered', $serialized, 'The array must have a recordsFiltered key.');
+        self::assertObjectHasAttribute('draw', $unserializedResponse);
+        self::assertObjectHasAttribute('data', $unserializedResponse);
+        self::assertObjectHasAttribute('recordsTotal', $unserializedResponse);
+        self::assertObjectHasAttribute('recordsFiltered', $unserializedResponse);
 
-        self::assertIsInt($serialized['draw'], 'Draw must be an integer.');
-        self::assertIsArray($serialized['data'], 'Data must be an array.');
-        self::assertIsInt($serialized['recordsTotal'], 'RecordsTotal must be an integer.');
-        self::assertIsInt($serialized['recordsFiltered'], 'RecordsFiltered must be an integer.');
+        self::assertSame($draw, $unserializedResponse->draw);
+        self::assertSame($data, $unserializedResponse->data);
+        self::assertSame($recordsTotal, $unserializedResponse->recordsTotal);
+        self::assertSame($recordsFiltered, $unserializedResponse->recordsFiltered);
     }
 }
