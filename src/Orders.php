@@ -50,8 +50,8 @@ class Orders extends IntPosition
 
         $dir = Direction::tryFrom((string) $orderDatas['dir']);
 
-        if($dir === null) {
-           throw new \DomainException('order.dir.notExist');
+        if ($dir === null) {
+            throw new \DomainException('order.dir.notExist');
         }
 
         $this->list[] = new Order((int)$orderDatas['column'], $dir);
