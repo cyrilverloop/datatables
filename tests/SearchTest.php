@@ -16,29 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class SearchTest extends TestCase
 {
-    // Properties :
-
-    /**
-     * @var \CyrilVerloop\Datatables\Search the search elements.
-     */
-    protected Search $search;
-
-
     // Methods :
-
-    /**
-     * Initialises tests.
-     */
-    public function setUp(): void
-    {
-        $searchDatas = [
-            'value' => '',
-            'regex' => 'false'
-        ];
-
-        $this->search = new Search($searchDatas);
-    }
-
 
     /**
      * Returns missing datas.
@@ -47,9 +25,9 @@ final class SearchTest extends TestCase
     public function getMissingSearchDatas(): array
     {
         return [
-            'the array is empty' => [[]],
-            'the "regex" key does not exist' => [['value' => '']],
-            'the "value" key does not exist' => [['regex' => 'false']]
+            'empty array' => [[]],
+            'no regex key' => [['value' => '']],
+            'no value key' => [['regex' => 'false']]
         ];
     }
 
@@ -60,7 +38,7 @@ final class SearchTest extends TestCase
      *
      * @dataProvider getMissingSearchDatas
      */
-    public function testCanThrownAnOutOfBoundsExceptionWhenConstructingIf(array $missingDatas): void
+    public function testCanThrowAnOutOfBoundsException(array $missingDatas): void
     {
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessage('search.key.notExist');
@@ -75,8 +53,14 @@ final class SearchTest extends TestCase
     public function getInvalidSearchDatas(): array
     {
         return [
-            'the "value" key is not a string' => [['value' => 0, 'regex' => 'false']],
-            'the "regex" key is not a string' => [['value' => '', 'regex' => 0]],
+            'value is an int' => [['value' => 0, 'regex' => 'false']],
+            'value is a float' => [['value' => 0.5, 'regex' => 'false']],
+            'value is an array' => [['value' => [], 'regex' => 'false']],
+            'value is an object' => [['value' => new \stdClass(), 'regex' => 'false']],
+            'regex is an int' => [['value' => '', 'regex' => 0]],
+            'regex is a float' => [['value' => '', 'regex' => 0.5]],
+            'regex is an array' => [['value' => '', 'regex' => []]],
+            'regex is an object' => [['value' => '', 'regex' => new \stdClass()]]
         ];
     }
 
@@ -87,7 +71,7 @@ final class SearchTest extends TestCase
      *
      * @dataProvider getInvalidSearchDatas
      */
-    public function testCanThrownAnInvalidArgumentExceptionWhenConstructingIf(array $invalidDatas): void
+    public function testCanThrowAnInvalidArgumentException(array $invalidDatas): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('search.key.notAString');
@@ -97,9 +81,9 @@ final class SearchTest extends TestCase
 
     /**
      * Tests that an exception is thrown
-     * if the regex is unexpected.
+     * if the regex is neither 'true' nor 'false'.
      */
-    public function testCanThrownARangeExceptionWhenConstructingIfRegexIsNotValid(): void
+    public function testCanThrowARangeExceptionWhenRegexIsNeitherTrueNorFalse(): void
     {
         $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('search.regex.notValid');
@@ -113,9 +97,16 @@ final class SearchTest extends TestCase
      *
      * @covers ::getValue
      */
-    public function testCanGetValue(): void
+    public function testCanGiveValue(): void
     {
-        self::assertSame('', $this->search->getValue(), 'The values must be the same.');
+        $searchDatas = [
+            'value' => 'test-value',
+            'regex' => 'true'
+        ];
+
+        $search = new Search($searchDatas);
+
+        self::assertSame('test-value', $search->getValue());
     }
 
 
@@ -124,26 +115,31 @@ final class SearchTest extends TestCase
      *
      * @covers ::getRegex
      */
-    public function testCanGetRegexIfFalse(): void
+    public function testCanGiveAFalseRegex(): void
     {
-        self::assertFalse($this->search->getRegex(), 'The values must be the same.');
-    }
+        $searchDatas = [
+            'value' => '',
+            'regex' => 'false'
+        ];
+        $search = new Search($searchDatas);
 
+        self::assertFalse($search->getRegex());
+    }
 
     /**
      * Tests that the regex can be returned true.
      *
      * @covers ::getRegex
      */
-    public function testCanGetRegexIfTrue(): void
+    public function testCanGiveATrueRegex(): void
     {
         $searchDatas = [
             'value' => '',
             'regex' => 'true'
         ];
 
-        $this->search = new Search($searchDatas);
+        $search = new Search($searchDatas);
 
-        self::assertTrue($this->search->getRegex(), 'The values must be the same.');
+        self::assertTrue($search->getRegex());
     }
 }
