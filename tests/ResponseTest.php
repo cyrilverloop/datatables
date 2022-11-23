@@ -40,7 +40,7 @@ final class ResponseTest extends TestCase
      *
      * @dataProvider getParametersForRangeExceptions
      */
-    public function testThrowsARangeException(
+    public function testCanThrowARangeException(
         int $draw,
         array $data,
         int $recordsTotal,
@@ -77,7 +77,7 @@ final class ResponseTest extends TestCase
      *
      * @dataProvider getParametersForLogicExceptions
      */
-    public function testThrowsALogicException(
+    public function testCanThrowALogicException(
         int $draw,
         array $data,
         int $recordsTotal,
