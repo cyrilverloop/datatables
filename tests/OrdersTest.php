@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CyrilVerloop\Datatables\Tests;
 
-use CyrilVerloop\Datatables\Direction;
 use CyrilVerloop\Datatables\Order;
 use CyrilVerloop\Datatables\Orders;
 use PHPUnit\Framework\TestCase;
@@ -14,106 +13,132 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Orders
  * @covers ::__construct
+ * @covers ::addFromArray
  * @group orders
  */
 final class OrdersTest extends TestCase
 {
-    // Properties :
-
-    /**
-     * @var \CyrilVerloop\Datatables\Orders the list of orders.
-     */
-    protected Orders $orders;
-
-
     // Methods :
 
     /**
-     * Initialises tests.
+     * Returns orders values.
+     * @return array orders values.
      */
-    public function setUp(): void
+    private function getOrdersValues(): array
     {
-        $this->orders = new Orders([]);
-    }
-
-
-    /**
-     * Returns missing datas.
-     * @return mixed[] missing datas.
-     */
-    public function getMissingOrderDatas(): array
-    {
-        return [
-            'when the array is empty' => [[[]]],
-            'when the "column" key does not exist' => [[['dir' => '']]],
-            'when the "dir" key does not exist' => [[['column' => 1]]]
-        ];
+        return [[
+            'dir' => 'asc',
+            'column' => '0'
+        ]];
     }
 
     /**
-     * Tests that an exception is thrown
-     * if datas are missing.
-     * @param mixed[] $missingOrderDatas missing search datas.
-     *
-     * @covers ::addFromArray
-     * @dataProvider getMissingOrderDatas
+     * Tests that an \OutOfBoundsException is thrown
+     * when dir is missing.
      */
-    public function testCanThrownAnOutOfBoundsExceptionWhenConstructingIfDatasAreMissing(array $missingOrderDatas): void
+    public function testCanThrownAnOutOfBoundsExceptionWhenDirIsMissing(): void
     {
         $this->expectException(\OutOfBoundsException::class);
-        $this->expectExceptionMessage('orders.key.notExist');
+        $this->expectExceptionMessage('dir.notExist');
 
-        new Orders($missingOrderDatas);
+        $ordersValues = $this->getOrdersValues();
+        unset($ordersValues[0]['dir']);
+
+        new Orders($ordersValues);
+    }
+
+    /**
+     * Tests that an \OutOfBoundsException is thrown
+     * when column is missing.
+     */
+    public function testCanThrownAnOutOfBoundsExceptionWhenColumnIsMissing(): void
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        $this->expectExceptionMessage('column.notExist');
+
+        $ordersValues = $this->getOrdersValues();
+        unset($ordersValues[0]['column']);
+
+        new Orders($ordersValues);
     }
 
     /**
      * Tests that an exception is thrown
      * if the order direction is neither 'asc' nor 'desc'.
-     *
-     * @covers ::addFromArray
      */
-    public function testCanThrownADomainExceptionWhenDirectionIsNeitherAscNorDesc(): void
+    public function testCanThrownAnUnexpectedValueExceptionWhenDirectionIsNeitherAscNorDesc(): void
     {
-        $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('order.dir.notExist');
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('dir.unexpectedValue');
 
-        new Orders([['column' => 1, 'dir' => 5]]);
+        $ordersValues = $this->getOrdersValues();
+        $ordersValues[0]['dir'] = 5;
+
+        new Orders($ordersValues);
     }
 
-    /**
-     * Tests that an object can be constructed without data.
-     */
-    public function testCanBeConstructedWithEmptyDatas(): void
-    {
-        self::assertFalse($this->orders->valid(), 'The orders must be an empty array.');
-    }
 
     /**
-     * Returns datas to add an order.
-     * @return mixed[] datas to add an order.
+     * Returns invalid digits.
+     * @return mixed[] invalid digits.
      */
-    public function getOrderDatas(): array
+    public function getNonDigitsValue(): array
     {
         return [
-            'when dir is asc' => [[['column' => '1', 'dir' => 'asc']]],
-            'when dir is desc' => [[['column' => '1', 'dir' => 'desc']]]
+            'a float string' => ['0.5'],
+            'an alpha string' => ['test'],
+            'an int' => [0],
+            'a float' => [0.5],
+            'an array' => [[]],
+            'an object' => [new \stdClass()]
         ];
     }
 
     /**
-     * Tests that an object can be constructed with datas.
-     * @param mixed[] $orderDatas order datas.
+     * Tests that an exception is thrown
+     * when column is not string containing only digits.
+     * @param mixed $notADigitValue not a digit value.
      *
-     * @covers ::addFromArray
-     * @uses \CyrilVerloop\Datatables\Order
-     * @uses \CyrilVerloop\Datatables\Orders
-     * @dataProvider getOrderDatas
+     * @dataProvider getNonDigitsValue
      */
-    public function testCanBeConstructedWithDatas(array $orderDatas): void
+    public function testCanThrowAnInvalidArgumentExceptionWhenDataIsNotAString(mixed $notADigitValue): void
     {
-        $this->orders = new Orders($orderDatas);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('column.notOnlyDigitsInString');
 
-        self::assertTrue($this->orders->valid(), 'The orders must not be an empty array.');
+        $ordersValues = $this->getOrdersValues();
+        $ordersValues[0]['column'] = $notADigitValue;
+
+        new Orders($ordersValues);
+    }
+
+
+    /**
+     * Tests that an order can be added from an array
+     * when "dir" is "asc".
+     *
+     * @uses \CyrilVerloop\Datatables\Order::__construct
+     */
+    public function testCanHaveOrdersWhenDirectionIsAsc(): void
+    {
+        $orders = new Orders($this->getOrdersValues());
+
+        self::assertTrue($orders->valid(), 'The orders must not be an empty array.');
+    }
+
+    /**
+     * Tests that an order can be added from an array
+     * when "dir" is "desc".
+     *
+     * @uses \CyrilVerloop\Datatables\Order::__construct
+     */
+    public function testCanHaveOrdersWhenDirectionIsDesc(): void
+    {
+        $ordersValues = $this->getOrdersValues();
+        $ordersValues[0]['dir'] = 'desc';
+        $orders = new Orders($ordersValues);
+
+        self::assertTrue($orders->valid(), 'The orders must not be an empty array.');
     }
 
 
@@ -121,50 +146,19 @@ final class OrdersTest extends TestCase
      * Tests that an order can be added.
      *
      * @covers ::add
-     * @uses \CyrilVerloop\Datatables\Order
-     * @uses \CyrilVerloop\Datatables\Orders
-     * @depends testCanBeConstructedWithEmptyDatas
-     * @depends testCanBeConstructedWithDatas
+     * @uses \CyrilVerloop\Datatables\Order::__construct
+     * @depends testCanHaveOrdersWhenDirectionIsAsc
+     * @depends testCanHaveOrdersWhenDirectionIsDesc
      */
     public function testCanAdd(): void
     {
-        self::assertFalse($this->orders->valid(), 'The orders must be an empty array.');
+        $orders = new Orders([]);
+
+        self::assertFalse($orders->valid(), 'The orders must be an empty array.');
 
         $order = new Order(0);
-        $this->orders->add($order);
+        $orders->add($order);
 
-        self::assertTrue($this->orders->valid(), 'The orders must not be an empty array.');
-    }
-
-
-    /**
-     * Tests that the iterator can be rewinded.
-     *
-     * @covers ::rewind
-     * @uses \CyrilVerloop\Datatables\Order
-     * @uses \CyrilVerloop\Datatables\Orders
-     * @depends testCanAdd
-     */
-    public function testCanRewind(): void
-    {
-        $order = new Order(1, Direction::Ascending);
-        $this->orders->add($order);
-        $this->orders->add($order);
-
-        $firstCounter = 0;
-
-        foreach ($this->orders as $order) {
-            $firstCounter++;
-        }
-
-        self::assertSame(2, $firstCounter, 'There must be 2 object in the iterator.');
-
-        $secondCounter = 0;
-
-        foreach ($this->orders as $order) {
-            $secondCounter++;
-        }
-
-        self::assertSame(2, $secondCounter, 'There must be also 2 object in the iterator.');
+        self::assertTrue($orders->valid(), 'The orders must not be an empty array.');
     }
 }
