@@ -15,7 +15,7 @@ class Columns extends IntPosition
 
     /**
      * The constructor.
-     * @param mixed[] $columnsDatas the datas of each column.
+     * @param array $columnsDatas the datas of each column.
      */
     public function __construct(array $columnsDatas)
     {
@@ -32,40 +32,24 @@ class Columns extends IntPosition
 
     // Methods :
 
-
     /**
      * Adds a column from an array.
-     * @param mixed[] $columnDatas the datas.
-     * @throws \OutOfBoundsException if a key is missing.
-     * @throws \InvalidArgumentException if the values are not of the proper types.
-     * @throws \UnexpectedValueException if "searchable" or "orderable" are not "true" or "false".
+     * @param array $columnDatas the datas.
+     * @throws \OutOfBoundsException if the "data" key is missing.
+     * @throws \InvalidArgumentException if the "data" key is not a string.
      */
     private function addFromArray(array $columnDatas): void
     {
-        if (
-            array_key_exists('data', $columnDatas) === false ||
-            array_key_exists('searchable', $columnDatas) === false ||
-            array_key_exists('orderable', $columnDatas) === false
-        ) {
-            throw new \OutOfBoundsException('columns.key.notExist');
+        if (array_key_exists('data', $columnDatas) === false) {
+            throw new \OutOfBoundsException('data.notExist');
         }
 
-        if (
-            is_string($columnDatas['data']) === false ||
-            is_string($columnDatas['searchable']) === false ||
-            is_string($columnDatas['orderable']) === false
-        ) {
-            throw new \InvalidArgumentException('columns.column.InvalidArgument');
+        if (is_string($columnDatas['data']) === false) {
+            throw new \InvalidArgumentException('data.notAString');
         }
 
-        if (
-            $columnDatas['searchable'] !== 'true' &&
-            $columnDatas['searchable'] !== 'false' ||
-            $columnDatas['orderable'] !== 'true' &&
-            $columnDatas['orderable'] !== 'false'
-        ) {
-            throw new \UnexpectedValueException('columns.dir.unexpectedValue');
-        }
+        $this->checkSearchable($columnDatas);
+        $this->checkOrderable($columnDatas);
 
         $searchable = false;
         $orderable = false;
@@ -81,6 +65,56 @@ class Columns extends IntPosition
         }
 
         $this->list[] = new Column($columnDatas['data'], $searchable, $orderable);
+    }
+
+    /**
+     * Check if data is valid.
+     * @param array $columnDatas the datas.
+     * @throws \OutOfBoundsException if the "searchable" key is missing.
+     * @throws \InvalidArgumentException if the "searchable" key is not a string.
+     * @throws \UnexpectedValueException if "searchable" key is neither "true" nor "false".
+     */
+    private function checkSearchable(array $columnDatas): void
+    {
+        if (array_key_exists('searchable', $columnDatas) === false) {
+            throw new \OutOfBoundsException('searchable.notExist');
+        }
+
+        if (is_string($columnDatas['searchable']) === false) {
+            throw new \InvalidArgumentException('searchable.notAString');
+        }
+
+        if (
+            $columnDatas['searchable'] !== 'true' &&
+            $columnDatas['searchable'] !== 'false'
+        ) {
+            throw new \UnexpectedValueException('searchable.unexpectedValue');
+        }
+    }
+
+    /**
+     * Check if data is valid.
+     * @param array $columnDatas the datas.
+     * @throws \OutOfBoundsException if the "orderable" key is missing.
+     * @throws \InvalidArgumentException if the "orderable" key is not a string.
+     * @throws \UnexpectedValueException if "orderable"  key is neither "true" nor "false".
+     */
+    private function checkOrderable(array $columnDatas): void
+    {
+        if (array_key_exists('orderable', $columnDatas) === false) {
+            throw new \OutOfBoundsException('orderable.notExist');
+        }
+
+        if (is_string($columnDatas['orderable']) === false) {
+            throw new \InvalidArgumentException('orderable.notAString');
+        }
+
+        if (
+            $columnDatas['orderable'] !== 'true' &&
+            $columnDatas['orderable'] !== 'false'
+        ) {
+            throw new \UnexpectedValueException('orderable.unexpectedValue');
+        }
     }
 
     /**

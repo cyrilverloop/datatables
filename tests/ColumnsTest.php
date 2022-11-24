@@ -13,65 +13,76 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversDefaultClass \CyrilVerloop\Datatables\Columns
  * @covers ::__construct
+ * @covers ::addFromArray
+ * @covers ::checkSearchable
+ * @covers ::checkOrderable
  * @group columns
  */
 final class ColumnsTest extends TestCase
 {
-    // Properties :
-
-    /**
-     * @var \CyrilVerloop\Datatables\Columns the list of columns.
-     */
-    protected Columns $columns;
-
-
     // Methods :
 
     /**
-     * Initialises tests.
+     * Returns columns values.
+     * @return array columns values.
      */
-    public function setUp(): void
+    private function getColumnsValues(): array
     {
-        $this->columns = new Columns([]);
-    }
-
-
-    /**
-     * Returns missing datas.
-     * @return mixed[] missing datas.
-     */
-    public function getMissingColumnDatas(): array
-    {
-        return [
-            'the array is empty' => [
-                [[]]
-            ],
-            'the "data" key does not exist' => [
-                [['searchable' => '', 'orderable' => '']]
-            ],
-            'the "searchable" key does not exist' => [
-                [['data' => '', 'orderable' => '']]
-            ],
-            'the "orderable" key does not exist' => [
-                [['data' => '', 'searchable' => '']]
+        return [[
+            'data' => 'test-data',
+            'name' => 'test-name',
+            'searchable' => 'true',
+            'orderable' => 'true',
+            'search' => [
+                'value' => '',
+                'regex' => 'false'
             ]
-        ];
+        ]];
     }
 
     /**
-     * Tests that an exception is thrown
-     * if datas are missing.
-     * @param mixed[] $missingColumnDatas missing search datas.
-     *
-     * @covers ::addFromArray
-     * @dataProvider getMissingColumnDatas
+     * Tests that an \OutOfBoundsException is thrown
+     * when data is missing.
      */
-    public function testCanThrownAnOutOfBoundsExceptionWhenConstructingIf(array $missingColumnDatas): void
+    public function testCanThrowAnOutOfBoundsExceptionWhenDataIsMissing(): void
     {
         $this->expectException(\OutOfBoundsException::class);
-        $this->expectExceptionMessage('columns.key.notExist');
+        $this->expectExceptionMessage('data.notExist');
 
-        new Columns($missingColumnDatas);
+        $columnsValues = $this->getColumnsValues();
+        unset($columnsValues[0]['data']);
+
+        new Columns($columnsValues);
+    }
+
+    /**
+     * Tests that an \OutOfBoundsException is thrown
+     * when searchable is missing.g.
+     */
+    public function testCanThrowAnOutOfBoundsExceptionWhenSearchableIsMissing(): void
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        $this->expectExceptionMessage('searchable.notExist');
+
+        $columnsValues = $this->getColumnsValues();
+        unset($columnsValues[0]['searchable']);
+
+        new Columns($columnsValues);
+    }
+
+    /**
+     * Tests that an \OutOfBoundsException is thrown
+     * when orderable is missing.
+     */
+    public function testCanThrowAnOutOfBoundsExceptionWhenOrderableIsMissing(): void
+    {
+        $this->expectException(\OutOfBoundsException::class);
+        $this->expectExceptionMessage('orderable.notExist');
+
+        $columnsValues = $this->getColumnsValues();
+        unset($columnsValues[0]['orderable']);
+
+        new Columns($columnsValues);
     }
 
 
@@ -79,35 +90,68 @@ final class ColumnsTest extends TestCase
      * Returns invalid datas.
      * @return mixed[] invalid datas.
      */
-    public function getInvalidColumnDatas(): array
+    public function getNotAStringValue(): array
     {
         return [
-            'the "data" key is not a string' => [
-                [['data' => 0, 'searchable' => '', 'orderable' => '']]
-            ],
-            'the "searchable" key is not a string' => [
-                [['data' => '', 'searchable' => 0, 'orderable' => '']]
-            ],
-            'the "orderable" key is not a string' => [
-                [['data' => '', 'searchable' => '', 'orderable' => 0]]
-            ]
+            'an int' => [0],
+            'a float' => [0.5],
+            'an array' => [[]],
+            'an object' => [new \stdClass()]
         ];
     }
 
     /**
      * Tests that an exception is thrown
-     * if datas are invalid.
-     * @param mixed[] $invalidColumnDatas invalid datas.
+     * when data is not string.
+     * @param mixed $notAStringValue not a string value.
      *
-     * @covers ::addFromArray
-     * @dataProvider getInvalidColumnDatas
+     * @dataProvider getNotAStringValue
      */
-    public function testCanThrownAnInvalidArgumentExceptionWhenConstructingIf(array $invalidColumnDatas): void
+    public function testCanThrowAnInvalidArgumentExceptionWhenDataIsNotAString(mixed $notAStringValue): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('columns.column.InvalidArgument');
+        $this->expectExceptionMessage('data.notAString');
 
-        new Columns($invalidColumnDatas);
+        $columnsValues = $this->getColumnsValues();
+        $columnsValues[0]['data'] = $notAStringValue;
+
+        new Columns($columnsValues);
+    }
+
+    /**
+     * Tests that an exception is thrown
+     * when searchable is not string.
+     * @param mixed $notAStringValue not a string value.
+     *
+     * @dataProvider getNotAStringValue
+     */
+    public function testCanThrowAnInvalidArgumentExceptionWhenSearchableIsNotAString(mixed $notAStringValue): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('searchable.notAString');
+
+        $columnsValues = $this->getColumnsValues();
+        $columnsValues[0]['searchable'] = $notAStringValue;
+
+        new Columns($columnsValues);
+    }
+
+    /**
+     * Tests that an exception is thrown
+     * when orderable is not string.
+     * @param mixed $notAStringValue not a string value.
+     *
+     * @dataProvider getNotAStringValue
+     */
+    public function testCanThrowAnInvalidArgumentExceptionWhenOrderableIsNotAString(mixed $notAStringValue): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('orderable.notAString');
+
+        $columnsValues = $this->getColumnsValues();
+        $columnsValues[0]['orderable'] = $notAStringValue;
+
+        new Columns($columnsValues);
     }
 
 
@@ -118,10 +162,10 @@ final class ColumnsTest extends TestCase
     public function getUnexpectedColumnDatas(): array
     {
         return [
-            'if "searchable" is an empty string' => [
+            'searchable is an empty string' => [
                 [['data' => '', 'name' => '', 'searchable' => '', 'orderable' => 'false', 'search' => []]]
             ],
-            'if "orderable" is an empty string' => [
+            'orderable is an empty string' => [
                 [['data' => '', 'name' => '', 'searchable' => 'false', 'orderable' => '', 'search' => []]]
             ]
         ];
@@ -129,18 +173,33 @@ final class ColumnsTest extends TestCase
 
     /**
      * Tests that an exception is thrown
-     * if datas are unexpected.
-     * @param mixed[] $unexpectedColumnDatas unexpected datas.
+     * when searchable is neither "true" nor "false".
      *
-     * @covers ::addFromArray
-     * @dataProvider getUnexpectedColumnDatas
      */
-    public function testCanThrowAnUnexpectedValueExceptionWhenConstructing(array $unexpectedColumnDatas): void
+    public function testCanThrowAnUnexpectedValueExceptionWhenSearchableIsNeitherTrueNorFalse(): void
     {
         $this->expectException(\UnexpectedValueException::class);
-        $this->expectExceptionMessage('columns.dir.unexpectedValue');
+        $this->expectExceptionMessage('searchable.unexpectedValue');
 
-        new Columns($unexpectedColumnDatas);
+        $columnsValues = $this->getColumnsValues();
+        $columnsValues[0]['searchable'] = '';
+
+        new Columns($columnsValues);
+    }
+
+    /**
+     * Tests that an exception is thrown
+     * when orderable is neither "true" nor "false".
+     */
+    public function testCanThrowAnUnexpectedValueExceptionWhenOrderableIsNeitherTrueNorFalse(): void
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('orderable.unexpectedValue');
+
+        $columnsValues = $this->getColumnsValues();
+        $columnsValues[0]['orderable'] = '';
+
+        new Columns($columnsValues);
     }
 
 
@@ -148,30 +207,20 @@ final class ColumnsTest extends TestCase
      * Tests that a column can be added from an array
      * when "searchable" and "oderable" are "false".
      *
-     * @covers ::addFromArray
      * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
      * @uses \CyrilVerloop\Datatables\Search
      */
-    public function testCanABeConstructedWhenSearchableAndOrderableAreFalse(): void
+    public function testCanHaveAFalseValueForSearchableAndOrderable(): void
     {
-        $columnDatas = [[
-            'data' => 'data',
-            'name' => 'name',
-            'searchable' => 'false',
-            'orderable' => 'false',
-            'search' => [
-                'value' => '',
-                'regex' => 'false'
-            ],
-        ]];
-
-        $this->columns = new Columns($columnDatas);
+        $columnsValues = $this->getColumnsValues();
+        $columnsValues[0]['searchable'] = 'false';
+        $columnsValues[0]['orderable'] = 'false';
+        $columns = new Columns($columnsValues);
 
         /** @var \CyrilVerloop\Datatables\Column */
-        $column = $this->columns->current();
+        $column = $columns->current();
 
-        self::assertSame('data', $column->getData(), 'The datas must be the same.');
+        self::assertSame('test-data', $column->getData(), 'The datas must be the same.');
         self::assertFalse($column->isSearchable(), 'The method must return true.');
         self::assertFalse($column->isOrderable(), 'The method must return true.');
     }
@@ -180,26 +229,16 @@ final class ColumnsTest extends TestCase
      * Tests that a column can be added from an array
      * when "searchable" and "oderable" are "true".
      *
-     * @covers ::addFromArray
      * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
-     * @uses \CyrilVerloop\Datatables\Search
-     * @uses \CyrilVerloop\Iterator\IntPosition
      */
-    public function testCanBeConstructedWhenSearchableAndOrderableAreTrue(): void
+    public function testCanHaveATrueValueForSearchableAndOrderable(): void
     {
-        $columnDatas = [[
-            'data' => 'data',
-            'searchable' => 'true',
-            'orderable' => 'true'
-        ]];
-
-        $this->columns = new Columns($columnDatas);
+        $columns = new Columns($this->getColumnsValues());
 
         /** @var \CyrilVerloop\Datatables\Column */
-        $column = $this->columns->current();
+        $column = $columns->current();
 
-        self::assertSame('data', $column->getData(), 'The datas must be the same.');
+        self::assertSame('test-data', $column->getData());
         self::assertTrue($column->isSearchable(), 'The column must not be searchable.');
         self::assertTrue($column->isOrderable(), 'The column must not be orderable.');
     }
@@ -207,29 +246,17 @@ final class ColumnsTest extends TestCase
     /**
      * Tests that an object can be constructed with datas.
      *
+     * @covers ::getColumn
      * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
-     * @uses \CyrilVerloop\Datatables\Search
      */
-    public function testCanBeConstructedWithDatas(): void
+    public function testCanHaveColumnsDatas(): void
     {
-        $columnsValues = [
-            [
-                'data' => 'data',
-                'name' => 'name',
-                'searchable' => 'true',
-                'orderable' => 'true',
-                'search' => [
-                    'value' => '',
-                    'regex' => 'false'
-                ]
-            ]
-        ];
+        $columns = new Columns($this->getColumnsValues());
+        $column = $columns->getColumn(0);
 
-        $this->columns = new Columns($columnsValues);
-        $column = $this->columns->current();
-
-        self::assertSame('data', $column->getData(), 'the datas must be the same.');
+        self::assertSame('test-data', $column->getData());
+        self::assertTrue($column->isSearchable());
+        self::assertTrue($column->isOrderable());
     }
 
 
@@ -238,16 +265,17 @@ final class ColumnsTest extends TestCase
      * if the position does not exist.
      *
      * @covers ::getColumn
-     * @depends testCanABeConstructedWhenSearchableAndOrderableAreFalse
-     * @depends testCanBeConstructedWhenSearchableAndOrderableAreTrue
-     * @depends testCanBeConstructedWithDatas
+     * @depends testCanHaveAFalseValueForSearchableAndOrderable
+     * @depends testCanHaveATrueValueForSearchableAndOrderable
+     * @depends testCanHaveColumnsDatas
      */
-    public function testCanThrowOutOfBoundsExceptionIfPositionDoesNotExist(): void
+    public function testCanThrowOutOfBoundsExceptionWhenPositionDoesNotExist(): void
     {
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessage('columns.position.notExist');
 
-        $this->columns->getColumn(0);
+        $columns = new Columns([]);
+        $columns->getColumn(0);
     }
 
 
@@ -256,51 +284,17 @@ final class ColumnsTest extends TestCase
      *
      * @covers ::add
      * @covers ::getColumn
-     * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
-     * @uses \CyrilVerloop\Datatables\Search
-     * @depends testCanABeConstructedWhenSearchableAndOrderableAreFalse
-     * @depends testCanBeConstructedWhenSearchableAndOrderableAreTrue
-     * @depends testCanBeConstructedWithDatas
+     * @uses \CyrilVerloop\Datatables\Column::__construct
+     * @depends testCanHaveAFalseValueForSearchableAndOrderable
+     * @depends testCanHaveATrueValueForSearchableAndOrderable
+     * @depends testCanHaveColumnsDatas
      */
-    public function testCanAddAndGetColumn(): void
+    public function testCanAddAndGiveAColumn(): void
     {
-        $column = new Column();
-        $this->columns->add($column);
+        $columns = new Columns([]);
+        $column = new Column('test-data');
+        $columns->add($column);
 
-        self::assertSame($column, $this->columns->getColumn(0), 'The method must return the same column');
-    }
-
-
-    /**
-     * Tests that the iterator can be rewinded.
-     *
-     * @covers ::rewind
-     * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Columns
-     * @uses \CyrilVerloop\Datatables\Search
-     * @depends testCanAddAndGetColumn
-     */
-    public function testCanRewind(): void
-    {
-        $column = new Column();
-        $this->columns->add($column);
-        $this->columns->add($column);
-
-        $firstCounter = 0;
-
-        foreach ($this->columns as $column) {
-            $firstCounter++;
-        }
-
-        self::assertSame(2, $firstCounter, 'There must be 2 object in the iterator.');
-
-        $secondCounter = 0;
-
-        foreach ($this->columns as $column) {
-            $secondCounter++;
-        }
-
-        self::assertSame(2, $secondCounter, 'There must be also 2 object in the iterator.');
+        self::assertSame($column, $columns->getColumn(0));
     }
 }
