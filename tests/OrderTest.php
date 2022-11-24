@@ -20,7 +20,7 @@ final class OrderTest extends TestCase
     // Methods :
 
     /**
-     * Tests that an object can not be constructed
+     * Tests that an object can throw a \DomainException
      * if the column number is negative.
      */
     public function testCanThrowADomainExceptionWhenColumnIsNegative(): void
