@@ -243,22 +243,6 @@ final class ColumnsTest extends TestCase
         self::assertTrue($column->isOrderable(), 'The column must not be orderable.');
     }
 
-    /**
-     * Tests that an object can be constructed with datas.
-     *
-     * @covers ::getColumn
-     * @uses \CyrilVerloop\Datatables\Column
-     */
-    public function testCanHaveColumnsDatas(): void
-    {
-        $columns = new Columns($this->getColumnsValues());
-        $column = $columns->getColumn(0);
-
-        self::assertSame('test-data', $column->getData());
-        self::assertTrue($column->isSearchable());
-        self::assertTrue($column->isOrderable());
-    }
-
 
     /**
      * Tests that an InvalidArgumentException is thrown
@@ -267,7 +251,6 @@ final class ColumnsTest extends TestCase
      * @covers ::getColumn
      * @depends testCanHaveAFalseValueForSearchableAndOrderable
      * @depends testCanHaveATrueValueForSearchableAndOrderable
-     * @depends testCanHaveColumnsDatas
      */
     public function testCanThrowOutOfBoundsExceptionWhenPositionDoesNotExist(): void
     {
@@ -287,7 +270,6 @@ final class ColumnsTest extends TestCase
      * @uses \CyrilVerloop\Datatables\Column::__construct
      * @depends testCanHaveAFalseValueForSearchableAndOrderable
      * @depends testCanHaveATrueValueForSearchableAndOrderable
-     * @depends testCanHaveColumnsDatas
      */
     public function testCanAddAndGiveAColumn(): void
     {
