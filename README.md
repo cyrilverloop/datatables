@@ -6,7 +6,7 @@ Simple PHP classes to map DataTables Request and Reponse requiring PHP 8.1+.
 
 [![License](https://img.shields.io/github/license/cyrilverloop/datatables)](https://github.com/cyrilverloop/datatables/blob/trunk/LICENSE)
 [![Type coverage](https://shepherd.dev/github/cyrilverloop/datatables/coverage.svg)](https://shepherd.dev/github/cyrilverloop/datatables)
-[![Minimum PHP version](https://img.shields.io/badge/php-%3E%3D8.0-%23777BB4?logo=php&style=flat)](https://www.php.net/)
+[![Minimum PHP version](https://img.shields.io/badge/php-%3E%3D8.1-%23777BB4?logo=php&style=flat)](https://www.php.net/)
 
 
 ## Installation
