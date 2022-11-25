@@ -134,7 +134,7 @@ final class RequestTest extends TestCase
      *
      * @covers ::getCriterias
      */
-    public function testCanGetEmptyCriteria(): void
+    public function testCanGiveEmptyCriteria(): void
     {
         $search = [
             'value' => '',
@@ -159,7 +159,7 @@ final class RequestTest extends TestCase
      *
      * @covers ::getCriterias
      */
-    public function testCanGetCriteria(): void
+    public function testCanGiveCriteria(): void
     {
         $request = new Request(
             $this->getColumns(),
@@ -232,7 +232,7 @@ final class RequestTest extends TestCase
      *
      * @covers ::getOrderBy
      */
-    public function testCanGetOrderBy(): void
+    public function testCanGiveOrderBy(): void
     {
         $orders = [
             [

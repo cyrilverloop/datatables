@@ -252,7 +252,7 @@ final class ColumnsTest extends TestCase
      * @depends testCanHaveAFalseValueForSearchableAndOrderable
      * @depends testCanHaveATrueValueForSearchableAndOrderable
      */
-    public function testCanThrowOutOfBoundsExceptionWhenPositionDoesNotExist(): void
+    public function testCanThrowAnOutOfBoundsExceptionWhenPositionDoesNotExist(): void
     {
         $this->expectException(\OutOfBoundsException::class);
         $this->expectExceptionMessage('columns.position.notExist');
