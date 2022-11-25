@@ -76,7 +76,7 @@ and `./ci/phpunit/testdox.html` for a verbose list of passing / failing tests.
 
 To run mutation testing, you must run PHPUnit first, then :
 ```shellsession
-user@host resto-api$ ./tools/infection -c./ci/infection.json
+user@host datatables$ ./tools/infection -c./ci/infection.json
 ```
 The generated outputs will be in `./ci/infection/`.
 
@@ -84,7 +84,7 @@ The generated outputs will be in `./ci/infection/`.
 
 To do a static analysis :
 ```shellsession
-user@host resto-api$ ./tools/psalm -c ./ci/psalm.xml [--report=./psalm/psalm.txt --output-format=text]
+user@host datatables$ ./tools/psalm -c ./ci/psalm.xml [--report=./psalm/psalm.txt --output-format=text]
 ```
 Use "--report=./psalm/psalm.txt --output-format=text"
 if you want the output in a file instead of on screen.
@@ -103,5 +103,5 @@ The generated HTML documentation will be in `./ci/phpdoc/`.
 All PHP files in this project follows [PSR-12](https://www.php-fig.org/psr/psr-12/).
 To indent the code :
 ```shellsession
-user@host resto-api$ ./tools/phpcbf --standard=PSR12 --extensions=php --ignore=*/Kernel.php -p ./src/ ./tests/
+user@host datatables$ ./tools/phpcbf --standard=PSR12 --extensions=php --ignore=*/Kernel.php -p ./src/ ./tests/
 ```
