@@ -6,15 +6,16 @@ namespace CyrilVerloop\Datatables\Tests;
 
 use CyrilVerloop\Datatables\Direction;
 use CyrilVerloop\Datatables\Order;
+use PHPUnit\Framework\Attributes as PA;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests an order for Datatables.
- *
- * @coversDefaultClass \CyrilVerloop\Datatables\Order
- * @covers ::__construct
- * @group order
  */
+#[
+    PA\CoversClass(Order::class),
+    PA\Group('order')
+]
 final class OrderTest extends TestCase
 {
     // Methods :
@@ -34,8 +35,6 @@ final class OrderTest extends TestCase
 
     /**
      * Tests that the column can be returned.
-     *
-     * @covers ::getColumn
      */
     public function testCanGiveItsColumn(): void
     {
@@ -47,8 +46,6 @@ final class OrderTest extends TestCase
 
     /**
      * Tests that the ASC direction can be returned.
-     *
-     * @covers ::getDir
      */
     public function testCanGiveAnAscDirection(): void
     {
@@ -59,8 +56,6 @@ final class OrderTest extends TestCase
 
     /**
      * Tests that the ASC direction can be returned.
-     *
-     * @covers ::getDir
      */
     public function testCanGiveAnDescDirection(): void
     {

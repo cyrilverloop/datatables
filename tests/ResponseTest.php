@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace CyrilVerloop\Datatables\Tests;
 
 use CyrilVerloop\Datatables\Response;
+use PHPUnit\Framework\Attributes as PA;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the response for Datatables.
- *
- * @coversDefaultClass \CyrilVerloop\Datatables\Response
- * @covers ::__construct
- * @group response
  */
+#[
+    PA\CoversClass(Response::class),
+    PA\Group('response')
+]
 final class ResponseTest extends TestCase
 {
     /**
      * Returns datas to test the RangeExceptions.
      * @return mixed[] datas to test the RangeExceptions.
      */
-    public function getParametersForRangeExceptions(): array
+    public static function getParametersForRangeExceptions(): array
     {
         $datas = ['data1','data2'];
 
@@ -37,9 +38,11 @@ final class ResponseTest extends TestCase
      * @param mixed[] $data the datas.
      * @param int $recordsTotal the number of records.
      * @param int $recordsFiltered the number of filtered records.
-     *
-     * @dataProvider getParametersForRangeExceptions
      */
+    #[
+        PA\DataProvider('getParametersForRangeExceptions'),
+        PA\TestDox('Can throw a RangeException when $_dataName')
+    ]
     public function testCanThrowARangeException(
         int $draw,
         array $data,
@@ -57,7 +60,7 @@ final class ResponseTest extends TestCase
      * Returns datas to test the LogicExceptions.
      * @return mixed[] datas to test the LogicExceptions.
      */
-    public function getParametersForLogicExceptions(): array
+    public static function getParametersForLogicExceptions(): array
     {
         $datas = ['data1','data2'];
 
@@ -74,9 +77,11 @@ final class ResponseTest extends TestCase
      * @param mixed[] $data the datas.
      * @param int $recordsTotal the number of records.
      * @param int $recordsFiltered the number of filtered records.
-     *
-     * @dataProvider getParametersForLogicExceptions
      */
+    #[
+        PA\DataProvider('getParametersForLogicExceptions'),
+        PA\TestDox('Can throw a LogicException when $_dataName')
+    ]
     public function testCanThrowALogicException(
         int $draw,
         array $data,
@@ -94,7 +99,7 @@ final class ResponseTest extends TestCase
      * Returns datas to test jsonSerialize.
      * @return mixed[] datas to test jsonSerialize.
      */
-    public function getParametersForJsonSerialize(): array
+    public static function getParametersForJsonSerialize(): array
     {
         $data = [
             'data1',
@@ -115,10 +120,8 @@ final class ResponseTest extends TestCase
      * @param mixed[] $data the datas.
      * @param int $recordsTotal the number of records.
      * @param int $recordsFiltered the number of filtered records.
-     *
-     * @covers ::jsonSerialize
-     * @dataProvider getParametersForJsonSerialize
      */
+    #[PA\DataProvider('getParametersForJsonSerialize')]
     public function testCanJsonSerialize(
         int $draw,
         array $data,
@@ -128,10 +131,10 @@ final class ResponseTest extends TestCase
         $response = new Response($draw, $data, $recordsTotal, $recordsFiltered);
         $unserializedResponse = json_decode(json_encode($response), false);
 
-        self::assertObjectHasAttribute('draw', $unserializedResponse);
-        self::assertObjectHasAttribute('data', $unserializedResponse);
-        self::assertObjectHasAttribute('recordsTotal', $unserializedResponse);
-        self::assertObjectHasAttribute('recordsFiltered', $unserializedResponse);
+        self::assertTrue(property_exists($unserializedResponse, 'draw'));
+        self::assertTrue(property_exists($unserializedResponse, 'data'));
+        self::assertTrue(property_exists($unserializedResponse, 'recordsTotal'));
+        self::assertTrue(property_exists($unserializedResponse, 'recordsFiltered'));
 
         self::assertSame($draw, $unserializedResponse->draw);
         self::assertSame($data, $unserializedResponse->data);

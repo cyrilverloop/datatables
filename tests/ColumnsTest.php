@@ -6,18 +6,17 @@ namespace CyrilVerloop\Datatables\Tests;
 
 use CyrilVerloop\Datatables\Column;
 use CyrilVerloop\Datatables\Columns;
+use PHPUnit\Framework\Attributes as PA;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the list of columns for Datatables.
- *
- * @coversDefaultClass \CyrilVerloop\Datatables\Columns
- * @covers ::__construct
- * @covers ::addFromArray
- * @covers ::checkSearchable
- * @covers ::checkOrderable
- * @group columns
  */
+#[
+    PA\CoversClass(Columns::class),
+    PA\UsesClass(Column::class),
+    PA\Group('columns')
+]
 final class ColumnsTest extends TestCase
 {
     // Methods :
@@ -90,7 +89,7 @@ final class ColumnsTest extends TestCase
      * Returns invalid datas.
      * @return mixed[] invalid datas.
      */
-    public function getNotAStringValue(): array
+    public static function getNotAStringValue(): array
     {
         return [
             'an int' => [0],
@@ -104,9 +103,10 @@ final class ColumnsTest extends TestCase
      * Tests that an exception is thrown
      * when data is not string.
      * @param mixed $notAStringValue not a string value.
-     *
-     * @dataProvider getNotAStringValue
      */
+    #[
+        PA\DataProvider('getNotAStringValue')
+    ]
     public function testCanThrowAnInvalidArgumentExceptionWhenDataIsNotAString(mixed $notAStringValue): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -122,9 +122,10 @@ final class ColumnsTest extends TestCase
      * Tests that an exception is thrown
      * when searchable is not string.
      * @param mixed $notAStringValue not a string value.
-     *
-     * @dataProvider getNotAStringValue
      */
+    #[
+        PA\DataProvider('getNotAStringValue')
+    ]
     public function testCanThrowAnInvalidArgumentExceptionWhenSearchableIsNotAString(mixed $notAStringValue): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -140,9 +141,10 @@ final class ColumnsTest extends TestCase
      * Tests that an exception is thrown
      * when orderable is not string.
      * @param mixed $notAStringValue not a string value.
-     *
-     * @dataProvider getNotAStringValue
      */
+    #[
+        PA\DataProvider('getNotAStringValue')
+    ]
     public function testCanThrowAnInvalidArgumentExceptionWhenOrderableIsNotAString(mixed $notAStringValue): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -156,25 +158,8 @@ final class ColumnsTest extends TestCase
 
 
     /**
-     * Returns unexpected datas.
-     * @return mixed[] unexpected datas.
-     */
-    public function getUnexpectedColumnDatas(): array
-    {
-        return [
-            'searchable is an empty string' => [
-                [['data' => '', 'name' => '', 'searchable' => '', 'orderable' => 'false', 'search' => []]]
-            ],
-            'orderable is an empty string' => [
-                [['data' => '', 'name' => '', 'searchable' => 'false', 'orderable' => '', 'search' => []]]
-            ]
-        ];
-    }
-
-    /**
      * Tests that an exception is thrown
      * when searchable is neither "true" nor "false".
-     *
      */
     public function testCanThrowAnUnexpectedValueExceptionWhenSearchableIsNeitherTrueNorFalse(): void
     {
@@ -206,9 +191,6 @@ final class ColumnsTest extends TestCase
     /**
      * Tests that a column can be added from an array
      * when "searchable" and "oderable" are "false".
-     *
-     * @uses \CyrilVerloop\Datatables\Column
-     * @uses \CyrilVerloop\Datatables\Search
      */
     public function testCanHaveAFalseValueForSearchableAndOrderable(): void
     {
@@ -228,8 +210,6 @@ final class ColumnsTest extends TestCase
     /**
      * Tests that a column can be added from an array
      * when "searchable" and "oderable" are "true".
-     *
-     * @uses \CyrilVerloop\Datatables\Column
      */
     public function testCanHaveATrueValueForSearchableAndOrderable(): void
     {
@@ -247,11 +227,11 @@ final class ColumnsTest extends TestCase
     /**
      * Tests that an InvalidArgumentException is thrown
      * if the position does not exist.
-     *
-     * @covers ::getColumn
-     * @depends testCanHaveAFalseValueForSearchableAndOrderable
-     * @depends testCanHaveATrueValueForSearchableAndOrderable
      */
+    #[
+        PA\Depends('testCanHaveAFalseValueForSearchableAndOrderable'),
+        PA\Depends('testCanHaveATrueValueForSearchableAndOrderable')
+    ]
     public function testCanThrowAnOutOfBoundsExceptionWhenPositionDoesNotExist(): void
     {
         $this->expectException(\OutOfBoundsException::class);
@@ -264,13 +244,11 @@ final class ColumnsTest extends TestCase
 
     /**
      * Tests that a column can be added and found in the list.
-     *
-     * @covers ::add
-     * @covers ::getColumn
-     * @uses \CyrilVerloop\Datatables\Column::__construct
-     * @depends testCanHaveAFalseValueForSearchableAndOrderable
-     * @depends testCanHaveATrueValueForSearchableAndOrderable
      */
+    #[
+        PA\Depends('testCanHaveAFalseValueForSearchableAndOrderable'),
+        PA\Depends('testCanHaveATrueValueForSearchableAndOrderable')
+    ]
     public function testCanAddAndGiveAColumn(): void
     {
         $columns = new Columns([]);

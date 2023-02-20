@@ -4,21 +4,27 @@ declare(strict_types=1);
 
 namespace CyrilVerloop\Datatables\Tests;
 
+use CyrilVerloop\Datatables\Column;
+use CyrilVerloop\Datatables\Columns;
+use CyrilVerloop\Datatables\Order;
+use CyrilVerloop\Datatables\Orders;
 use CyrilVerloop\Datatables\Request;
+use CyrilVerloop\Datatables\Search;
+use PHPUnit\Framework\Attributes as PA;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the request for Datatables.
- *
- * @coversDefaultClass \CyrilVerloop\Datatables\Request
- * @covers ::__construct
- * @uses \CyrilVerloop\Datatables\Column
- * @uses \CyrilVerloop\Datatables\Columns
- * @uses \CyrilVerloop\Datatables\Order
- * @uses \CyrilVerloop\Datatables\Orders
- * @uses \CyrilVerloop\Datatables\Search
- * @group request
  */
+#[
+    PA\CoversClass(Request::class),
+    PA\UsesClass(Column::class),
+    PA\UsesClass(Columns::class),
+    PA\UsesClass(Order::class),
+    PA\UsesClass(Orders::class),
+    PA\UsesClass(Search::class),
+    PA\Group('request')
+]
 final class RequestTest extends TestCase
 {
     // Properties :
@@ -96,7 +102,7 @@ final class RequestTest extends TestCase
      * Returns the elements to test the exceptions.
      * @return mixed[] the elements to test the exceptions.
      */
-    public function getParametersForRangeExceptions(): array
+    public static function getParametersForRangeExceptions(): array
     {
         return [
             'when start is negative' => [[], [], -1, 1, $this->getSearch()],
@@ -112,9 +118,11 @@ final class RequestTest extends TestCase
      * @param int $start the starting point.
      * @param int $length the length.
      * @param mixed[] $search the elements for the search.
-     *
-     * @dataProvider getParametersForRangeExceptions
      */
+    #[
+        PA\DataProvider('getParametersForRangeExceptions'),
+        PA\TestDox('Can throw a range exception $_dataName')
+    ]
     public function testCanThrowARangeException(
         array $columns,
         array $order,
@@ -131,8 +139,6 @@ final class RequestTest extends TestCase
 
     /**
      * Tests that no criteria is returned.
-     *
-     * @covers ::getCriterias
      */
     public function testCanGiveEmptyCriteria(): void
     {
@@ -156,8 +162,6 @@ final class RequestTest extends TestCase
 
     /**
      * Tests that criterias are returned.
-     *
-     * @covers ::getCriterias
      */
     public function testCanGiveCriteria(): void
     {
@@ -180,8 +184,6 @@ final class RequestTest extends TestCase
     /**
      * Tests that an empty array is returned
      * if there is no order.
-     *
-     * @covers ::getOrderBy
      */
     public function testCanHaveEmptyOrderByWhenThereIsNoOrders(): void
     {
@@ -200,8 +202,6 @@ final class RequestTest extends TestCase
     /**
      * Tests that an exception is thrown
      * when it is impossible to order on a column.
-     *
-     * @covers ::getOrderBy
      */
     public function testCanThrowAnOutOfBoundsExceptionIfOrderByANonOrderablaColumn(): void
     {
@@ -229,8 +229,6 @@ final class RequestTest extends TestCase
 
     /**
      * Tests that the order is returned.
-     *
-     * @covers ::getOrderBy
      */
     public function testCanGiveOrderBy(): void
     {

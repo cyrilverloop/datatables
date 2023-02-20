@@ -6,16 +6,17 @@ namespace CyrilVerloop\Datatables\Tests;
 
 use CyrilVerloop\Datatables\Order;
 use CyrilVerloop\Datatables\Orders;
+use PHPUnit\Framework\Attributes as PA;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the list of orders for Datatables.
- *
- * @coversDefaultClass \CyrilVerloop\Datatables\Orders
- * @covers ::__construct
- * @covers ::addFromArray
- * @group orders
  */
+#[
+    PA\CoversClass(Orders::class),
+    PA\UsesClass(Order::class),
+    PA\Group('orders')
+]
 final class OrdersTest extends TestCase
 {
     // Methods :
@@ -82,7 +83,7 @@ final class OrdersTest extends TestCase
      * Returns invalid digits.
      * @return mixed[] invalid digits.
      */
-    public function getNonDigitsValue(): array
+    public static function getNonDigitsValue(): array
     {
         return [
             'a float string' => ['0.5'],
@@ -98,9 +99,11 @@ final class OrdersTest extends TestCase
      * Tests that an exception is thrown
      * when column is not string containing only digits.
      * @param mixed $notADigitValue not a digit value.
-     *
-     * @dataProvider getNonDigitsValue
      */
+    #[
+        PA\DataProvider('getNonDigitsValue'),
+        PA\TestDox('Can throw an invalid argument exception when data is $_dataName')
+    ]
     public function testCanThrowAnInvalidArgumentExceptionWhenDataIsNotAString(mixed $notADigitValue): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -116,8 +119,6 @@ final class OrdersTest extends TestCase
     /**
      * Tests that an order can be added from an array
      * when "dir" is "asc".
-     *
-     * @uses \CyrilVerloop\Datatables\Order::__construct
      */
     public function testCanHaveOrdersWhenDirectionIsAsc(): void
     {
@@ -129,8 +130,6 @@ final class OrdersTest extends TestCase
     /**
      * Tests that an order can be added from an array
      * when "dir" is "desc".
-     *
-     * @uses \CyrilVerloop\Datatables\Order::__construct
      */
     public function testCanHaveOrdersWhenDirectionIsDesc(): void
     {
@@ -144,12 +143,11 @@ final class OrdersTest extends TestCase
 
     /**
      * Tests that an order can be added.
-     *
-     * @covers ::add
-     * @uses \CyrilVerloop\Datatables\Order::__construct
-     * @depends testCanHaveOrdersWhenDirectionIsAsc
-     * @depends testCanHaveOrdersWhenDirectionIsDesc
      */
+    #[
+        PA\Depends('testCanHaveOrdersWhenDirectionIsAsc'),
+        PA\Depends('testCanHaveOrdersWhenDirectionIsDesc')
+    ]
     public function testCanAdd(): void
     {
         $orders = new Orders([]);

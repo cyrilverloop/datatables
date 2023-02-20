@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace CyrilVerloop\Datatables\Tests;
 
 use CyrilVerloop\Datatables\Search;
+use PHPUnit\Framework\Attributes as PA;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the search elements for Datatables.
- *
- * @coversDefaultClass \CyrilVerloop\Datatables\Search
- * @covers ::__construct
- * @group search
  */
+#[
+    PA\CoversClass(Search::class),
+    PA\Group('search')
+]
 final class SearchTest extends TestCase
 {
     // Methods :
@@ -22,12 +23,12 @@ final class SearchTest extends TestCase
      * Returns missing datas.
      * @return mixed[] missing datas.
      */
-    public function getMissingSearchDatas(): array
+    public static function getMissingSearchDatas(): array
     {
         return [
-            'empty array' => [[]],
-            'no regex key' => [['value' => '']],
-            'no value key' => [['regex' => 'false']]
+            'value' => [[]],
+            'regex key' => [['value' => '']],
+            'value key' => [['regex' => 'false']]
         ];
     }
 
@@ -35,9 +36,11 @@ final class SearchTest extends TestCase
      * Tests that an exception is thrown
      * if datas are missing.
      * @param mixed[] $missingDatas missing datas.
-     *
-     * @dataProvider getMissingSearchDatas
      */
+    #[
+        PA\DataProvider('getMissingSearchDatas'),
+        PA\TestDox('Can throw an OutOfBoundsException when there is no $_dataName')
+    ]
     public function testCanThrowAnOutOfBoundsException(array $missingDatas): void
     {
         $this->expectException(\OutOfBoundsException::class);
@@ -50,7 +53,7 @@ final class SearchTest extends TestCase
      * Returns invalid datas.
      * @return mixed[] invalid datas.
      */
-    public function getInvalidSearchDatas(): array
+    public static function getInvalidSearchDatas(): array
     {
         return [
             'value is an int' => [['value' => 0, 'regex' => 'false']],
@@ -68,9 +71,11 @@ final class SearchTest extends TestCase
      * Tests that an exception is thrown
      * if datas are invalid.
      * @param mixed[] $invalidDatas des données invalides.
-     *
-     * @dataProvider getInvalidSearchDatas
      */
+    #[
+        PA\DataProvider('getInvalidSearchDatas'),
+        PA\TestDox('Can throw an InvalidArgumentException when $_dataName')
+    ]
     public function testCanThrowAnInvalidArgumentException(array $invalidDatas): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -94,8 +99,6 @@ final class SearchTest extends TestCase
 
     /**
      * Tests that the value can be returned.
-     *
-     * @covers ::getValue
      */
     public function testCanGiveValue(): void
     {
@@ -112,8 +115,6 @@ final class SearchTest extends TestCase
 
     /**
      * Tests that the regex can be returned false.
-     *
-     * @covers ::getRegex
      */
     public function testCanGiveAFalseRegex(): void
     {
@@ -128,8 +129,6 @@ final class SearchTest extends TestCase
 
     /**
      * Tests that the regex can be returned true.
-     *
-     * @covers ::getRegex
      */
     public function testCanGiveATrueRegex(): void
     {

@@ -5,34 +5,35 @@ declare(strict_types=1);
 namespace CyrilVerloop\Datatables\Tests;
 
 use CyrilVerloop\Datatables\Column;
+use PHPUnit\Framework\Attributes as PA;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests a column for Datatables.
- *
- * @coversDefaultClass \CyrilVerloop\Datatables\Column
- * @covers ::__construct
- * @uses \CyrilVerloop\Datatables\Search
- * @group column
  */
+#[
+    PA\CoversClass(Column::class),
+    PA\Group('column')
+]
 final class ColumnTest extends TestCase
 {
     // Methods :
 
-    private function getParametersForGetData(): array
+    public static function getParametersForGetData(): array
     {
         return [
-            "data is empty" => [''],
-            "data is 'data'" => ['data']
+            'empty' => [''],
+            '"data"' => ['data']
         ];
     }
 
     /**
      * Tests that the data can be accessed.
-     *
-     * @covers ::getData
-     * @dataProvider getParametersForGetData
      */
+    #[
+        PA\DataProvider('getParametersForGetData'),
+        PA\TestDox('Can give its data when it is $_dataName')
+    ]
     public function testCanGiveItsData(string $data): void
     {
         $column = new Column($data);
@@ -43,8 +44,6 @@ final class ColumnTest extends TestCase
 
     /**
      * Tests if the column can be searched.
-     *
-     * @covers ::isSearchable
      */
     public function testCanGiveASearchableState(): void
     {
@@ -55,8 +54,6 @@ final class ColumnTest extends TestCase
 
     /**
      * Tests if the column can not be searched.
-     *
-     * @covers ::isSearchable
      */
     public function testCanGiveANonSearchableState(): void
     {
@@ -68,8 +65,6 @@ final class ColumnTest extends TestCase
 
     /**
      * Tests if the column can be ordered.
-     *
-     * @covers ::isOrderable
      */
     public function testCanGiveAnOrderableState(): void
     {
@@ -80,8 +75,6 @@ final class ColumnTest extends TestCase
 
     /**
      * Tests if the column can not be ordered.
-     *
-     * @covers ::isOrderable
      */
     public function testCanGiveANonOrderableState(): void
     {
