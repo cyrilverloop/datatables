@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd"
     bootstrap="../vendor/autoload.php"
     cacheDirectory="./cache/.phpunit.cache"
     colors="true"
@@ -16,15 +16,8 @@
     failOnSkipped="true"
     failOnWarning="true"
     testdox="true"
-    >
-
-    <coverage
-        includeUncoveredFiles="true"
-        >
-        <include>
-            <directory suffix=".php">../src</directory>
-        </include>
-
+>
+    <coverage includeUncoveredFiles="true">
         <report>
             <html outputDirectory="phpunit/html" />
         </report>
@@ -33,6 +26,12 @@
     <logging>
         <testdoxHtml outputFile="phpunit/testdox.html" />
     </logging>
+
+    <source>
+        <include>
+            <directory suffix=".php">../src</directory>
+        </include>
+    </source>
 
     <testsuites>
         <testsuite name="default">
