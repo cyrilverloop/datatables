@@ -89,7 +89,7 @@ final class RequestTest extends TestCase
      * Returns search parameters.
      * @return array search parameters.
      */
-    private function getSearch(): array
+    private static function getSearch(): array
     {
         return [
             'value' => 'value',
@@ -105,9 +105,9 @@ final class RequestTest extends TestCase
     public static function getParametersForRangeExceptions(): array
     {
         return [
-            'when start is negative' => [[], [], -1, 1, $this->getSearch()],
-            'when length is zero' => [[], [], 0, 0, $this->getSearch()],
-            'when length is less than minus one' => [[], [], 0, -2, $this->getSearch()],
+            'when start is negative' => [[], [], -1, 1, self::getSearch()],
+            'when length is zero' => [[], [], 0, 0, self::getSearch()],
+            'when length is less than minus one' => [[], [], 0, -2, self::getSearch()],
         ];
     }
 
@@ -170,7 +170,7 @@ final class RequestTest extends TestCase
             $this->getOrders(),
             0,
             -1,
-            $this->getSearch()
+            self::getSearch()
         );
         $criterias = $request->getCriterias();
 
@@ -192,7 +192,7 @@ final class RequestTest extends TestCase
             [],
             0,
             -1,
-            $this->getSearch()
+            self::getSearch()
         );
 
         self::assertSame([], $request->getOrderBy(), 'The value must be an empty array.');
@@ -217,7 +217,7 @@ final class RequestTest extends TestCase
             $orders,
             0,
             -1,
-            $this->getSearch()
+            self::getSearch()
         );
 
         $this->expectException(\OutOfBoundsException::class);
@@ -248,7 +248,7 @@ final class RequestTest extends TestCase
             $orders,
             0,
             -1,
-            $this->getSearch()
+            self::getSearch()
         );
 
         $orderBy = $request->getOrderBy();
