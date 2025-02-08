@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   install:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v4
@@ -45,7 +45,7 @@ jobs:
 
   phplint:
     needs: install
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/download-artifact@v4
@@ -60,7 +60,7 @@ jobs:
 
   phpcs:
     needs: phplint
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/download-artifact@v4
@@ -75,7 +75,7 @@ jobs:
 
   test:
     needs: phplint
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/download-artifact@v4
@@ -88,7 +88,7 @@ jobs:
     - name: Setup PHP with Xdebug
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2'
+        php-version: '8.4'
         coverage: xdebug
 
     - name: Run PHPUnit test
@@ -96,7 +96,7 @@ jobs:
 
   static-analysis:
     needs: phplint
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/download-artifact@v4
@@ -105,6 +105,11 @@ jobs:
 
     - name: Untar project.
       run:  tar -xf project.tar
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
 
     - name: Run Psalm
       run: ./tools/psalm -c ./ci/psalm.xml --shepherd --no-cache
