@@ -6,6 +6,8 @@ namespace CyrilVerloop\Datatables;
 
 /**
  * The request from DataTables.
+ *
+ * @psalm-api
  */
 class Request
 {

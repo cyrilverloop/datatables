@@ -120,6 +120,8 @@ class Columns extends IntPosition
     /**
      * Adds a column.
      * @param \CyrilVerloop\Datatables\Column $column the column.
+     *
+     * @psalm-api
      */
     public function add(Column $column): void
     {

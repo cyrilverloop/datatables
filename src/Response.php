@@ -6,6 +6,8 @@ namespace CyrilVerloop\Datatables;
 
 /**
  * The response to DataTables.
+ *
+ * @psalm-api
  */
 class Response implements \JsonSerializable
 {

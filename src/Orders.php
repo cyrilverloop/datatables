@@ -68,6 +68,8 @@ class Orders extends IntPosition
     /**
      * Adds an order.
      * @param \CyrilVerloop\Datatables\Order $order an order.
+     *
+     * @psalm-api
      */
     public function add(Order $order): void
     {

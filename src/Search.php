@@ -75,6 +75,8 @@ class Search
     /**
      * Returns whether the value is a regex.
      * @return bool whether the value is a regex.
+     *
+     * @psalm-api
      */
     public function getRegex(): bool
     {
