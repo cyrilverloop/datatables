@@ -8,6 +8,8 @@ use CyrilVerloop\Iterator\IntPosition;
 
 /**
  * A class to iterate over the columns.
+ *
+ * @psalm-api
  */
 class Columns extends IntPosition
 {

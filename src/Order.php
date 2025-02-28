@@ -6,6 +6,8 @@ namespace CyrilVerloop\Datatables;
 
 /**
  * A class representing an order for DataTables.
+ *
+ * @psalm-api
  */
 class Order
 {

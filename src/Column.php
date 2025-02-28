@@ -6,6 +6,8 @@ namespace CyrilVerloop\Datatables;
 
 /**
  * A class representing a column for DataTables.
+ *
+ * @psalm-api
  */
 class Column
 {

@@ -8,6 +8,8 @@ use CyrilVerloop\Iterator\IntPosition;
 
 /**
  * A class to iterate over the orders.
+ *
+ * @psalm-api
  */
 class Orders extends IntPosition
 {

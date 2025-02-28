@@ -6,6 +6,8 @@ namespace CyrilVerloop\Datatables;
 
 /**
  * A classe representing the search element for a DataTables column.
+ *
+ * @psalm-api
  */
 class Search
 {
