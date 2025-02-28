@@ -82,6 +82,7 @@ class Response implements \JsonSerializable
      * Returns the serialized object.
      * @return mixed[] the serialized object.
      */
+    #[\Override()]
     public function jsonSerialize(): array
     {
         return [
